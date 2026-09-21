@@ -1,5 +1,2 @@
-# Laur'Appui
-
-Site vitrine de Laura ENOUF — assistance administrative & pré-comptabilité indépendante.
-
-Version de démarrage destinée au déploiement Cloudflare Pages.
+# Laur'Appui V2
+Accompagnement administratif & gestion personnalisée.
