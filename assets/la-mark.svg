@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180">
+<g fill="#073454" font-family="Georgia,serif" font-weight="700">
+<text x="72" y="125" font-size="122">L</text><text x="142" y="125" font-size="112">A</text>
+</g>
+<path d="M58 125 C120 143 176 99 250 96" fill="none" stroke="#b78b54" stroke-width="8" stroke-linecap="round"/>
+<path d="M246 96 C270 72 290 62 316 58 C305 82 288 96 250 101Z" fill="#b78b54"/>
+<path d="M248 97 C274 104 295 116 313 137 C284 136 262 125 244 103Z" fill="#c8a476"/>
+</svg>
