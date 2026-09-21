@@ -483,3 +483,21 @@ footer{
 .same-approach-v513{display:flex;gap:13px;align-items:center;padding:17px 19px;border-left:4px solid var(--gold);border-radius:0 12px 12px 0;background:#f8efe2;color:#315a70;margin-top:12px}.same-approach-v513 strong{font:700 18px Georgia,serif;color:var(--navy);white-space:nowrap}.about-contact-v513{display:block;width:max-content;margin:20px auto 0;padding:15px 30px;background:var(--gold);color:#fff;box-shadow:0 10px 25px rgba(187,136,73,.2)}
 @media(max-width:950px){.about-layout-v513{grid-template-columns:310px 1fr;gap:30px}.portrait-card-v513{height:440px}.experience-v513{grid-template-columns:1fr}.same-approach-v513{display:block}.same-approach-v513 strong{display:block;margin-bottom:5px;white-space:normal}}
 @media(max-width:760px){.about-intro-v513{padding:35px 0 45px}.about-layout-v513{grid-template-columns:1fr}.about-layout-v513 aside{max-width:430px;margin:auto;width:100%}.portrait-card-v513{height:520px}.story-v513{text-align:left}.story-v513 h1{font-size:40px}.experience-v513{grid-template-columns:1fr}.about-contact-v513{width:100%;text-align:center}.menu a.active:after{display:none}}
+
+/* V5.14 — À propos : respiration et équilibre desktop */
+@media(min-width:951px){
+  .about-intro-v513{padding:52px 0 62px}
+  .about-layout-v513{max-width:1260px;grid-template-columns:390px minmax(0,1fr);gap:56px}
+  .story-v513 h1{font-size:51px}
+  .story-v513 h2{font-size:29px;margin-bottom:24px}
+  .story-v513>p{font-size:16px;line-height:1.68}
+  .story-v513 .lead{font-size:17px}
+  .experience-v513{gap:18px;margin:27px 0 20px}
+  .experience-v513>div{min-height:175px;padding:23px 21px}
+  .experience-v513 h3{font-size:19px}
+  .experience-v513 p{font-size:14px;line-height:1.55}
+  .same-approach-v513{display:grid;grid-template-columns:max-content 1fr;gap:18px;align-items:center;padding:19px 22px;margin-top:14px}
+  .same-approach-v513 strong{font-size:19px;white-space:nowrap}
+  .same-approach-v513 span{font-size:15px;line-height:1.5}
+  .about-contact-v513{margin-top:22px;padding:16px 34px;font-size:15px}
+}

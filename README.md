@@ -17,3 +17,11 @@ Aucun texte métier ni prestation n'a été modifié.
 Décompressez le ZIP puis envoyez son contenu à la racine du dépôt GitHub
 en remplaçant les fichiers existants. Après le déploiement Cloudflare Pages,
 effectuez Ctrl+F5 dans le navigateur.
+
+
+## V5.14
+- Ajustement visuel de la page À propos.
+- Bloc « Deux publics, une même approche » élargi et mieux aligné.
+- Cartes d’expérience plus aérées.
+- Ensemble légèrement agrandi sur écran desktop.
+- Portrait, textes et accueil conservés.
