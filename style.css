@@ -501,3 +501,36 @@ footer{
   .same-approach-v513 span{font-size:15px;line-height:1.5}
   .about-contact-v513{margin-top:22px;padding:16px 34px;font-size:15px}
 }
+
+/* V5.15 — À propos : bandeau « Deux publics » en lecture verticale */
+.same-approach-v513{
+  display:block;
+  padding:18px 22px 19px;
+}
+.same-approach-v513 strong{
+  display:block;
+  margin:0 0 7px;
+  white-space:normal;
+  line-height:1.25;
+}
+.same-approach-v513 span{
+  display:block;
+  line-height:1.55;
+}
+@media(min-width:951px){
+  .same-approach-v513{
+    display:block;
+    padding:19px 24px 20px;
+  }
+  .same-approach-v513 strong{
+    display:block;
+    margin-bottom:7px;
+    white-space:normal;
+    font-size:19px;
+  }
+  .same-approach-v513 span{
+    display:block;
+    font-size:15px;
+    line-height:1.55;
+  }
+}

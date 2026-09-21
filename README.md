@@ -25,3 +25,9 @@ effectuez Ctrl+F5 dans le navigateur.
 - Cartes d’expérience plus aérées.
 - Ensemble légèrement agrandi sur écran desktop.
 - Portrait, textes et accueil conservés.
+
+
+## V5.15
+- Page À propos conservée.
+- Bandeau « Deux publics, une même approche » corrigé : titre au-dessus, phrase en dessous pour une lecture plus naturelle.
+- Aucun changement sur le portrait, les cartes, les textes ou la page d’accueil.
