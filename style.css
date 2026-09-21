@@ -37,7 +37,7 @@ header{height:92px}
 .brand-official{height:82px;max-width:520px}
 .brand-official img{height:78px;width:auto;max-width:100%;object-fit:contain;object-position:left center}
 .hero,.hero-copy,.hero-photo{height:530px!important;min-height:530px!important}
-.hero-photo{background-image:url("assets/hero-office-v53.jpg")!important;background-position:center center!important}
+.hero-photo{background-image:url("assets/hero-office-v55.jpg")!important;background-position:center center!important}
 .hero-photo:before{background:linear-gradient(90deg,var(--cream),transparent 13%)}
 .values{margin-top:0!important;padding-top:25px!important;clear:both}
 @media(max-width:900px){
@@ -95,3 +95,20 @@ header{
   }
   .brand-official img{height:62px !important}
 }
+
+/* ===== V5.5 — VISUEL HERO VALIDÉ ===== */
+.hero-photo{
+  background-image:url("assets/hero-office-v55.jpg") !important;
+  background-size:cover !important;
+  background-position:center center !important;
+}
+/* Transition douce entre la zone texte et la photographie. */
+.hero-photo:before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:15%;
+  background:linear-gradient(90deg,var(--cream) 0%,rgba(250,246,239,.72) 34%,rgba(250,246,239,0) 100%) !important;
+  pointer-events:none;
+}
+/* Header V5.4 conservé tel quel. */
