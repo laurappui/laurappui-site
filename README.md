@@ -1,10 +1,15 @@
-# Laur'Appui V5.2
+# Laur'Appui — V5.3 GitHub
 
-Correctifs :
-- logo officiel repris directement depuis la maquette validée fournie par Laura ;
-- suppression du logo CSS approximatif ;
-- monogramme officiel appliqué sur la tasse du Hero ;
-- suppression de la bande parasite située sous la photo ;
-- hauteur gauche/droite du Hero verrouillée à 530 px sur ordinateur ;
-- section Écoute / Organisation / Gain de temps / Confidentialité replacée proprement sous le Hero ;
-- responsive mobile conservé.
+Version consolidée à importer dans GitHub.
+
+Modifications intégrées :
+- logo d'en-tête agrandi et repris du visuel validé ;
+- photo Hero remplacée par la version validée ;
+- logo sur la tasse intégré dans la photo validée ;
+- suppression du chevauchement/décalage sous la photo ;
+- alignement strict du Hero gauche/droite ;
+- section Écoute / Organisation / Gain de temps / Confidentialité proprement séparée ;
+- conservation des pages Professionnels, Particuliers, Prestations, Tarifs, À propos et Contact ;
+- responsive mobile/tablette conservé.
+
+Déploiement : extraire le ZIP, envoyer tout son contenu à la racine du dépôt GitHub, puis Commit changes.
