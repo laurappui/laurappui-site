@@ -38,3 +38,6 @@ Nouvelle page Tarifs complète : offres professionnels et particuliers, conditio
 
 
 V5.18 : tarifs élargis, frais de déplacement au départ de Mayenne (53100), prestations à distance et moyens de paiement sans PayPal.
+
+
+V5.19 : amélioration de la lisibilité des blocs pratiques de la page Tarifs (Mayenne 53100, frais de déplacement et prestations à distance), appliquée aux vues Professionnels et Particuliers.

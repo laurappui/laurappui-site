@@ -623,3 +623,14 @@ footer{
  .pricing-info-v518 article,.pricing-info-v518 article:nth-child(2n),.pricing-info-v518 article:nth-child(3n){border-right:0;border-bottom:1px solid var(--line)}
  .pricing-info-v518 article:last-child{border-bottom:0}
 }
+
+/* V5.19 — lisibilité des informations tarifs */
+.pricing-info-v518 .wrap{max-width:1320px!important}
+.pricing-info-v518 article{padding:22px 24px!important;gap:15px!important;align-items:flex-start!important}
+.pricing-info-v518 article i{flex:0 0 42px!important;width:42px!important;height:42px!important;font-size:18px!important}
+.pricing-info-v518 article h3{font-size:18px!important;line-height:1.2!important;margin:0 0 8px!important}
+.pricing-info-v518 article p{font-size:14px!important;line-height:1.55!important;margin:0!important}
+.pricing-info-v518 article:first-child strong{display:inline-block!important;font-size:14px!important;margin-bottom:7px!important;color:#073b57!important}
+.pricing-info-v518 article:first-child p{line-height:1.7!important}
+.pricing-info-v518 article:nth-child(2) p{line-height:1.7!important}
+@media(max-width:900px){.pricing-info-v518 article h3{font-size:17px!important}.pricing-info-v518 article p{font-size:14px!important}}
