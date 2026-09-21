@@ -153,3 +153,48 @@ header{
 .hero-photo{
   background-position:center center !important;
 }
+
+
+/* ===== LAUR'APPUI V5.8 — PARTIE BASSE ACCUEIL ===== */
+/* Le Hero V5.7 reste strictement inchangé. */
+
+.solutions{
+  padding:70px 24px 78px !important;
+  background:radial-gradient(circle at 50% 0%,rgba(194,139,70,.08),transparent 32%),#faf6ef !important;
+}
+.solutions .section-head{max-width:920px;margin:0 auto 34px;text-align:center}
+.solutions .section-head:after{content:"";display:block;width:58px;height:2px;margin:18px auto 0;background:#c28b46}
+.solution-grid{gap:26px !important;max-width:1160px !important;margin-left:auto !important;margin-right:auto !important}
+.solution-card{
+  position:relative;overflow:hidden;min-height:178px;padding:30px 72px 30px 94px !important;
+  border:1px solid rgba(194,139,70,.30) !important;border-radius:20px !important;
+  background:rgba(255,255,255,.96) !important;box-shadow:0 14px 34px rgba(9,55,82,.055);
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
+}
+.solution-card:before{content:"";position:absolute;width:120px;height:120px;right:-54px;bottom:-58px;border-radius:50%;background:rgba(194,139,70,.075)}
+.solution-card:hover{transform:translateY(-4px);box-shadow:0 20px 42px rgba(9,55,82,.10);border-color:rgba(194,139,70,.52) !important}
+.solution-card .icon,.solution-card .card-icon{width:54px !important;height:54px !important;border-radius:50% !important;background:#f3dfbf !important;color:#9c6429 !important}
+.solution-card h3{color:#073b5a !important;font-size:25px !important;margin-bottom:9px !important}
+.solution-card p{line-height:1.55 !important}
+.solution-card .arrow{color:#c28b46 !important;font-size:27px !important;transition:transform .2s ease}
+.solution-card:hover .arrow{transform:translateX(5px)}
+
+.about-home{position:relative;overflow:hidden;padding:76px 24px 72px !important;background:#fff !important;text-align:center}
+.about-home .eyebrow{letter-spacing:.28em !important;color:#a86a2c !important;font-weight:700 !important}
+.about-home h2{max-width:850px;margin:20px auto 24px !important;color:#073b5a !important;font-size:38px !important;line-height:1.15 !important}
+.about-home p{max-width:760px;margin-left:auto !important;margin-right:auto !important;line-height:1.7 !important}
+.about-home .btn,.about-home .button{margin-top:22px !important;box-shadow:0 9px 22px rgba(194,139,70,.16)}
+
+.cta-band{padding:36px 24px !important;background:linear-gradient(110deg,#073b5a,#0a4869) !important}
+.cta-band .container,.cta-band .inner{max-width:1160px !important;margin:auto !important}
+.cta-band h2,.cta-band h3{color:#fff !important}
+.cta-band p{color:rgba(255,255,255,.88) !important}
+.cta-band .btn,.cta-band .button,.cta-band a[class*="btn"]{border-radius:12px !important;box-shadow:0 8px 20px rgba(0,0,0,.10)}
+footer{border-top:1px solid rgba(194,139,70,.18)}
+
+@media(max-width:800px){
+  .solutions{padding:48px 18px 56px !important}
+  .solution-card{padding:26px 54px 26px 76px !important;min-height:auto}
+  .about-home{padding:56px 20px !important}
+  .about-home h2{font-size:31px !important}
+}
