@@ -28,7 +28,7 @@
 <article><i>€</i><div><h3>Modes de paiement</h3><p>Virement bancaire SEPA, chèque ou espèces. Les modalités de règlement sont précisées sur le devis et la facture.</p></div></article>
 <article><i>✓</i><div><h3>Transparence</h3><p>Des tarifs clairs, sans surprise. Un devis est proposé pour les demandes spécifiques.</p></div></article>
 <article><i>▤</i><div><h3>TVA</h3><p>TVA non applicable — article 293 B du CGI, sous réserve du maintien de la franchise en base de TVA.</p></div></article>
-<article><i>◇</i><div><h3>Engagement</h3><p>Forfaits professionnels sans engagement. Vous restez libre de faire évoluer votre formule selon vos besoins.</p></div></article>
+<article><i>◇</i><div><h3>Engagement</h3><p id="engagement-text">Forfaits professionnels sans engagement. Vous restez libre de faire évoluer votre formule selon vos besoins.</p></div></article>
 </div></section>
 <section class="inner-cta"><div class="wrap"><div><div class="eyebrow">UN PROJET ? UNE QUESTION ?</div><h2>Parlons de votre situation</h2><p>Un premier échange simple et sans engagement pour trouver la solution la plus adaptée à vos besoins.</p></div><a class="btn" href="contact.html">Demander un devis →</a></div></section>
 </main>
@@ -37,6 +37,12 @@
   const buttons = document.querySelectorAll('[data-pricing-target]');
   const panels = document.querySelectorAll('[data-pricing-panel]');
   function showPricing(target) {
+    const engagement = document.getElementById('engagement-text');
+    if (engagement) {
+      engagement.textContent = target === 'part'
+        ? 'Prestations et accompagnements sans engagement. Vous restez libre de choisir l’accompagnement adapté à vos besoins.'
+        : 'Forfaits professionnels sans engagement. Vous restez libre de faire évoluer votre formule selon vos besoins.';
+    }
     buttons.forEach(btn => {
       const active = btn.dataset.pricingTarget === target;
       btn.classList.toggle('active', active);
