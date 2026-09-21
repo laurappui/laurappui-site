@@ -425,3 +425,45 @@ footer{
 .about-page-content .signature{margin-top:28px}
 @media(max-width:900px){.about-home-grid{grid-template-columns:1fr;gap:30px}.about-brand-card{min-height:250px;max-width:430px;width:100%;margin:auto}.about-home-copy{text-align:center}.about-home-copy h2,.about-home-copy p{margin-left:auto;margin-right:auto}.about-home-copy .about-highlight{text-align:left}.about-page-content{padding:30px}}
 @media(max-width:560px){.about-home-v510{padding:42px 0 !important}.about-home-copy h2{font-size:31px}.about-brand-card{min-height:225px}.about-page{padding:50px 0 65px}.about-page h1{font-size:40px}.about-page-content{padding:24px 20px}.about-page-content .lead{font-size:17px}}
+
+/* ===== V5.11 — AJUSTEMENTS VISUELS SECTION LAURA ===== */
+.about-home-v510{
+  padding:42px 0 !important;
+}
+.about-home-v510 .about-home-grid{
+  grid-template-columns:360px minmax(0,1fr) !important;
+  gap:42px !important;
+  max-width:1040px !important;
+}
+.about-home-v510 .about-brand-card{
+  min-height:320px !important;
+  padding:30px !important;
+  box-shadow:0 18px 42px rgba(6,54,83,.10) !important;
+}
+.about-home-v510 .about-brand-card img{
+  width:116px !important;
+  height:116px !important;
+}
+.about-home-v510 .about-brand-card strong{
+  font-size:26px !important;
+}
+.about-home-v510 .about-home-copy h2{
+  margin-bottom:15px !important;
+}
+.about-home-v510 .about-home-copy p{
+  margin-bottom:10px !important;
+}
+.about-home-v510 .about-home-copy .about-highlight{
+  margin:14px 0 17px !important;
+}
+.about-home-v510 .about-more{
+  padding:16px 24px !important;
+  font-size:15px !important;
+  font-weight:700 !important;
+  box-shadow:0 10px 24px rgba(187,136,73,.24) !important;
+}
+@media(max-width:900px){
+  .about-home-v510{padding:38px 0 !important}
+  .about-home-v510 .about-home-grid{grid-template-columns:1fr !important;gap:28px !important}
+  .about-home-v510 .about-brand-card{min-height:250px !important;max-width:430px !important}
+}
