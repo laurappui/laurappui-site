@@ -136,3 +136,20 @@ header{
 .hero-photo{
   margin-bottom:0 !important;
 }
+
+
+/* ===== V5.7 — CORRECTION LIVRES =====
+   Le fondu s'arrête avant les livres pour préserver
+   ORGANISER / SIMPLIFIER / AVANCER en bleu foncé. */
+.hero-photo:before{
+  width:2.5% !important;
+  background:linear-gradient(
+    90deg,
+    rgba(250,246,239,.28) 0%,
+    rgba(250,246,239,.08) 48%,
+    rgba(250,246,239,0) 100%
+  ) !important;
+}
+.hero-photo{
+  background-position:center center !important;
+}
