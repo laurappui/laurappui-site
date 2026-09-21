@@ -112,3 +112,27 @@ header{
   pointer-events:none;
 }
 /* Header V5.4 conservé tel quel. */
+
+
+/* ===== V5.6 — HERO FINAL VALIDÉ ===== */
+.hero-photo{
+  background-image:url("assets/hero-office-v56.jpg") !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  position:relative;
+}
+/* Fondu beaucoup plus court : il ne recouvre plus les 3 livres. */
+.hero-photo:before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:7% !important;
+  background:linear-gradient(90deg,var(--cream) 0%,rgba(250,246,239,.48) 38%,rgba(250,246,239,0) 100%) !important;
+  pointer-events:none;
+}
+/* Conserver le visuel validé sans décalage sous la photo. */
+.hero,
+.hero-grid,
+.hero-photo{
+  margin-bottom:0 !important;
+}

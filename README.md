@@ -1,20 +1,16 @@
-# Laur'Appui — V5.5 GitHub
+# Laur'Appui — V5.6 finale
 
-Version correspondant au visuel validé.
+Version GitHub basée sur le dernier visuel validé.
 
-Modifications :
-- conservation du logo/header V5.4 ;
-- nouvelle photo Hero validée ;
-- les trois mots sur les livres sont de nouveau visibles :
-  ORGANISER / SIMPLIFIER / AVANCER ;
-- tableau mural « Un quotidien plus simple » intégré naturellement au décor ;
-- tasse Laur'Appui et plaque « À vos côtés, au quotidien » conservées ;
-- transition douce entre la partie texte et la photo ;
-- aucun changement sur les pages et fonctionnalités existantes.
+- tableau mural « Un quotidien plus simple » intégré au décor ;
+- livres ORGANISER / SIMPLIFIER / AVANCER clairement visibles ;
+- tasse Laur'Appui ;
+- plaque « À vos côtés, au quotidien » ;
+- logo/header conservé ;
+- fondu gauche réduit afin de ne plus masquer les livres ;
+- correction du décalage sous la photographie ;
+- autres pages et fonctionnalités conservées.
 
-Installation :
-1. Décompresser le ZIP.
-2. Envoyer tout son contenu à la racine du dépôt GitHub.
-3. Remplacer les fichiers existants.
-4. Commit changes.
-5. Attendre le redéploiement Cloudflare Pages puis faire Ctrl+F5.
+Déploiement :
+Décompresser le ZIP, envoyer son contenu à la racine du dépôt GitHub,
+valider le commit, attendre Cloudflare Pages puis actualiser avec Ctrl+F5.
