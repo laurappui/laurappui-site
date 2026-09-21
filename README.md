@@ -31,3 +31,7 @@ effectuez Ctrl+F5 dans le navigateur.
 - Page À propos conservée.
 - Bandeau « Deux publics, une même approche » corrigé : titre au-dessus, phrase en dessous pour une lecture plus naturelle.
 - Aucun changement sur le portrait, les cartes, les textes ou la page d’accueil.
+
+
+## V5.16
+Nouvelle page Tarifs complète : offres professionnels et particuliers, conditions de paiement et CTA.
