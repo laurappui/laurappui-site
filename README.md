@@ -35,3 +35,6 @@ effectuez Ctrl+F5 dans le navigateur.
 
 ## V5.16
 Nouvelle page Tarifs complète : offres professionnels et particuliers, conditions de paiement et CTA.
+
+
+V5.18 : tarifs élargis, frais de déplacement au départ de Mayenne (53100), prestations à distance et moyens de paiement sans PayPal.

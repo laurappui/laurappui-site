@@ -584,3 +584,42 @@ footer{
  .pricing-switch-v517 .pro-grid-v516,.pricing-switch-v517 .part-grid-v516{grid-template-columns:1fr}
  .pricing-switch-v517 .price-card-v516{min-height:0}
 }
+
+
+/* ===== V5.18 — TARIFS PLUS LARGES + DÉPLACEMENTS + DISTANCE ===== */
+@media(min-width:1100px){
+  .pricing-switch-v517{max-width:1480px!important}
+  .pricing-switch-v517 .pricing-zone-v516{padding:38px 36px 32px}
+  .pricing-switch-v517 .zone-head-v516 h2{font-size:38px}
+  .pricing-switch-v517 .zone-head-v516 p{font-size:16px}
+  .pricing-switch-v517 .pro-grid-v516{gap:20px}
+  .pricing-switch-v517 .part-grid-v516{max-width:1280px;gap:22px}
+  .pricing-switch-v517 .price-card-v516{min-height:480px;padding:28px 23px 21px}
+  .pricing-switch-v517 .price-card-v516 h3{font-size:23px}
+  .pricing-switch-v517 .price-card-v516 small{font-size:14px}
+  .pricing-switch-v517 .price-v516{font-size:39px}
+  .pricing-switch-v517 .price-card-v516 ul{font-size:14px}
+  .pricing-switch-v517 .price-card-v516 a{font-size:14px;padding:14px 10px}
+  .pricing-switch-v517 .pro-bottom-v516{gap:20px;margin-top:20px}
+  .pricing-switch-v517 .pro-bottom-v516 article,.pricing-switch-v517 .need-v516{padding:24px}
+  .pricing-switch-v517 .need-v516{max-width:1280px}
+}
+.pricing-info-v518{padding:34px 0 32px}
+.pricing-info-v518 .wrap{max-width:1480px;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid #e6d8c3;border-radius:18px;background:#fff;box-shadow:0 8px 24px rgba(6,54,83,.05);overflow:hidden}
+.pricing-info-v518 article{padding:22px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:145px}
+.pricing-info-v518 article:nth-child(3n){border-right:0}
+.pricing-info-v518 article:nth-child(n+4){border-bottom:0}
+.pricing-info-v518 i{width:48px;height:48px}
+.pricing-info-v518 h3{font-size:19px}
+.pricing-info-v518 p{font-size:13px;line-height:1.55}
+@media(max-width:1050px){
+ .pricing-info-v518 .wrap{grid-template-columns:1fr 1fr}
+ .pricing-info-v518 article,.pricing-info-v518 article:nth-child(3n){border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+ .pricing-info-v518 article:nth-child(2n){border-right:0}
+ .pricing-info-v518 article:nth-last-child(-n+2){border-bottom:0}
+}
+@media(max-width:700px){
+ .pricing-info-v518 .wrap{grid-template-columns:1fr}
+ .pricing-info-v518 article,.pricing-info-v518 article:nth-child(2n),.pricing-info-v518 article:nth-child(3n){border-right:0;border-bottom:1px solid var(--line)}
+ .pricing-info-v518 article:last-child{border-bottom:0}
+}
