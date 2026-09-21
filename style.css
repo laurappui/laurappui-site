@@ -1,0 +1,38 @@
+
+:root{
+ --navy:#062b49; --navy2:#0a3c60; --cream:#fbf7f1; --sand:#ead7bd;
+ --gold:#b48750; --ink:#102a43; --white:#fff; --muted:#64748b;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#fff;line-height:1.55}
+h1,h2,h3,.brand{font-family:Georgia,"Times New Roman",serif}
+a{text-decoration:none;color:inherit}.wrap{width:min(1180px,92%);margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid #eee}
+.nav{height:82px;display:flex;align-items:center;gap:34px}.brand{font-size:29px;color:var(--navy);font-weight:700;margin-right:auto}
+.brand small{display:block;font:9px Arial;letter-spacing:1.4px;text-transform:uppercase}
+nav{display:flex;gap:25px;font-size:14px}.quote,.btn{border:0;border-radius:12px;padding:14px 20px;display:inline-flex;align-items:center;gap:12px;font-weight:700;cursor:pointer}
+.quote{background:var(--gold);color:#fff}.btn.primary{background:var(--navy);color:#fff}.btn.light{background:#f2dfc6;color:#172a3a}
+.hero{background:linear-gradient(90deg,rgba(251,247,241,.98) 0 46%,rgba(251,247,241,.35)),url('assets/hero.svg') center/cover;min-height:580px;display:flex;align-items:center}
+.hero-copy{max-width:610px;padding:65px 0}.eyebrow{text-transform:uppercase;letter-spacing:3px;color:#95683d;font-size:13px;font-weight:700}
+h1{font-size:68px;line-height:.98;margin:18px 0 8px;color:var(--navy)}.lead{font-family:Georgia,serif;font-size:34px;line-height:1.08;margin:0 0 16px;color:var(--navy)}
+.hero p{max-width:520px}.actions{display:flex;gap:15px;flex-wrap:wrap;margin-top:28px}
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:32px 0;background:#fff}
+.trust div{text-align:center;padding:5px 20px;border-right:1px solid #eadfce}.trust div:last-child{border:0}.trust b{display:block;font-family:Georgia,serif;font-size:20px;color:var(--navy)}
+.section{padding:70px 0}.soft{background:var(--cream)}.section-title{text-align:center;margin-bottom:38px}.section-title h2{font-size:38px;color:var(--navy);margin:0 0 8px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:25px}.card{background:#fff;border:1px solid #eee2d5;border-radius:20px;overflow:hidden;box-shadow:0 10px 35px rgba(15,35,55,.06)}
+.card-body{padding:34px}.card h3{font-size:34px;color:var(--navy);margin:0 0 10px}.card p{color:#475569}.card ul{padding-left:20px}
+.about{display:grid;grid-template-columns:.9fr 1.1fr;gap:0;background:#fff}.about-img{min-height:410px;background:url('assets/about.svg') center/cover}.about-copy{padding:55px}.about h2{font-size:40px;color:var(--navy);margin:6px 0 15px}
+.cta{background:linear-gradient(90deg,var(--navy),var(--navy2));color:#fff;padding:52px 0}.cta-inner{display:flex;align-items:center;justify-content:space-between;gap:30px}.cta h2{font-size:38px;margin:0 0 8px}
+.page-hero{padding:80px 0;background:var(--cream);text-align:center}.page-hero h1{font-size:52px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.service{padding:28px;border:1px solid #eee2d5;border-radius:16px;background:#fff}.service h3{color:var(--navy);font-size:23px}
+.price{font-size:34px;color:var(--navy);font-family:Georgia,serif}.note{background:#fff6e9;border-left:4px solid var(--gold);padding:18px;border-radius:8px}
+form{display:grid;gap:14px;max-width:760px;margin:auto}input,select,textarea{width:100%;padding:14px;border:1px solid #d8d8d8;border-radius:10px;font:inherit}textarea{min-height:150px}
+footer{padding:35px 0;background:#fff;border-top:1px solid #eee}.foot{display:flex;justify-content:space-between;gap:25px;align-items:center;font-size:13px}.legal{color:#64748b}
+.mobile{display:none}
+@media(max-width:800px){
+ nav,.nav>.quote{display:none}.mobile{display:block}.nav{height:68px}
+ h1{font-size:47px}.lead{font-size:28px}.hero{min-height:530px;background:linear-gradient(rgba(251,247,241,.92),rgba(251,247,241,.92)),url('assets/hero.svg') center/cover}
+ .trust,.cards,.grid3,.about{grid-template-columns:1fr}.trust div{border-right:0;border-bottom:1px solid #eadfce;padding:18px}
+ .about-img{min-height:300px}.about-copy{padding:35px 24px}.cta-inner,.foot{align-items:flex-start;flex-direction:column}
+ .section{padding:48px 0}.page-hero h1{font-size:42px}
+}
