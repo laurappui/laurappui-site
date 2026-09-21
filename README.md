@@ -1,15 +1,10 @@
-# Laur'Appui — V5.3 GitHub
+# Laur'Appui — V5.4 GitHub
 
-Version consolidée à importer dans GitHub.
+Correctif ciblé :
+- logo du header nettement agrandi ;
+- proportions du logo conservées ;
+- navigation conservée ;
+- aucun changement apporté au Hero, à la photo, à la tasse, aux boutons ou aux quatre avantages ;
+- responsive tablette/mobile ajusté uniquement pour le header.
 
-Modifications intégrées :
-- logo d'en-tête agrandi et repris du visuel validé ;
-- photo Hero remplacée par la version validée ;
-- logo sur la tasse intégré dans la photo validée ;
-- suppression du chevauchement/décalage sous la photo ;
-- alignement strict du Hero gauche/droite ;
-- section Écoute / Organisation / Gain de temps / Confidentialité proprement séparée ;
-- conservation des pages Professionnels, Particuliers, Prestations, Tarifs, À propos et Contact ;
-- responsive mobile/tablette conservé.
-
-Déploiement : extraire le ZIP, envoyer tout son contenu à la racine du dépôt GitHub, puis Commit changes.
+Importer tout le contenu extrait du ZIP à la racine du dépôt GitHub puis valider avec Commit changes.

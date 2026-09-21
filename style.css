@@ -53,3 +53,45 @@ header{height:92px}
   .brand-official img{height:56px}
   .hero-photo{height:300px!important;min-height:300px!important}
 }
+
+/* ===== V5.4 — HEADER / LOGO UNIQUEMENT ===== */
+header{
+  height:100px;
+}
+.header-inner{
+  min-height:100px;
+}
+.brand-official{
+  height:94px !important;
+  max-width:560px !important;
+  display:flex;
+  align-items:center;
+}
+.brand-official img{
+  height:90px !important;
+  width:auto !important;
+  max-width:100% !important;
+  object-fit:contain;
+  object-position:left center;
+  display:block;
+}
+
+/* Le Hero et tout le contenu sous le header restent inchangés. */
+@media(max-width:900px){
+  header{height:82px}
+  .header-inner{min-height:82px}
+  .brand-official{
+    height:76px !important;
+    max-width:410px !important;
+  }
+  .brand-official img{height:72px !important}
+}
+@media(max-width:560px){
+  header{height:72px}
+  .header-inner{min-height:72px}
+  .brand-official{
+    height:66px !important;
+    max-width:285px !important;
+  }
+  .brand-official img{height:62px !important}
+}
