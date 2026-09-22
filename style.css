@@ -672,3 +672,69 @@ footer{
 
 /* V5.30 — coordonnées professionnelles */
 .footer-contact-v530{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap}.footer-contact-v530 a{color:inherit;text-decoration:none}.footer-contact-v530 a:hover{text-decoration:underline}.direct-contact-v530{display:grid;gap:10px;margin:22px 0}.direct-contact-v530 a{display:block;padding:12px 16px;border:1px solid rgba(31,59,91,.16);border-radius:12px;background:rgba(255,255,255,.72);color:#1f3b5b;text-decoration:none;font-weight:700;overflow-wrap:anywhere}.direct-contact-v530 a:hover{transform:translateY(-1px)}@media(max-width:760px){.footer-contact-v530{justify-content:center}.foot{gap:10px}}
+
+/* ===== V5.31 — RESPONSIVE SMARTPHONE / TABLETTE ===== */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{overflow-x:hidden}
+img{max-width:100%;height:auto}
+.nav-toggle{display:none;border:0;background:var(--navy);color:#fff;width:44px;height:44px;border-radius:10px;font-size:24px;line-height:1;cursor:pointer;align-items:center;justify-content:center;margin-left:auto}
+@media(max-width:900px){
+  .wrap,.nav{width:min(94%,1240px)}
+  header{height:auto!important;min-height:76px;position:relative;z-index:50}
+  .nav{min-height:76px;position:relative;flex-wrap:wrap;padding:5px 0}
+  .brand-official{height:66px!important;max-width:270px!important}
+  .brand-official img{height:62px!important;max-width:100%!important}
+  .nav-toggle{display:flex}
+  .menu{display:none!important;position:absolute;left:-3%;right:-3%;top:76px;background:#fff;border-top:1px solid #eee;border-bottom:1px solid var(--line);box-shadow:0 12px 25px rgba(6,54,83,.12);padding:12px 4% 18px;flex-direction:column;align-items:stretch;gap:0!important}
+  .menu.open{display:flex!important}
+  .menu a{padding:14px 8px;border-bottom:1px solid #f1e8dc;font-size:16px}
+  .menu a:last-child{border-bottom:0}
+  .quote{display:none!important}
+  .hero{display:flex!important;flex-direction:column;height:auto!important;min-height:0!important}
+  .hero-copy{height:auto!important;min-height:0!important;padding:44px 5% 38px!important;justify-content:flex-start!important}
+  .hero h1{font-size:clamp(46px,11vw,60px)!important}
+  .tagline{font-size:clamp(29px,7vw,38px)!important}
+  .hero-photo{width:100%;height:380px!important;min-height:380px!important;background-position:center!important}
+  .buttons{flex-wrap:wrap}
+  .buttons .btn{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center}
+  .values{grid-template-columns:repeat(2,1fr)!important}
+  .cards,.service-grid,.solution-grid,.offers-grid,.pricing-grid,.info-grid,.process-grid,.steps-grid,.detail-grid,.about-home-grid{grid-template-columns:1fr!important}
+  .card,.service,.solution-card{min-width:0}
+  .page{padding:44px 0!important}
+  .page h1{font-size:clamp(38px,8vw,48px)!important;overflow-wrap:anywhere}
+  .cta .wrap{display:flex!important;flex-direction:column;align-items:flex-start!important;gap:18px}
+  .cta .btn{margin-top:0!important}
+  .foot{display:flex!important;flex-direction:column;gap:10px;align-items:flex-start}
+  input,select,textarea,button{font-size:16px!important;max-width:100%}
+  table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+@media(max-width:560px){
+  .wrap,.nav{width:92%}
+  .brand-official{max-width:225px!important;height:60px!important}
+  .brand-official img{height:56px!important}
+  .nav-toggle{width:42px;height:42px}
+  .menu{top:70px}
+  .hero-copy{padding:36px 4% 32px!important}
+  .hero-photo{height:280px!important;min-height:280px!important}
+  .hero-photo:before{display:none!important}
+  .eyebrow{letter-spacing:2px!important;line-height:1.45}
+  .intro{font-size:16px!important}
+  .buttons{flex-direction:column!important;width:100%}
+  .buttons .btn,.btn{width:100%;text-align:center}
+  .values{grid-template-columns:1fr!important;padding:10px 0 20px!important}
+  .value{border-right:0!important;border-bottom:1px solid var(--line);padding:20px 10px!important}
+  .value:last-child{border-bottom:0}
+  .solutions{padding:44px 0 50px!important}
+  .heading h2,.about h2{font-size:30px!important}
+  .card,.solution-card{grid-template-columns:48px 1fr!important;padding:22px 18px!important;gap:12px!important}
+  .card-icon,.solution-card .card-icon{width:46px!important;height:46px!important}
+  .arrow{display:none!important}
+  .service{padding:20px!important}
+  .service h3{font-size:20px!important}
+  .signature{font-size:20px!important}
+  .cta{padding:32px 0!important}
+  .cta h2{font-size:26px!important}
+  .footer-contact-v530{display:flex;flex-direction:column;gap:5px}
+  form{width:100%}
+  input,select,textarea{width:100%!important}
+}
