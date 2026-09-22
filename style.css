@@ -1038,3 +1038,70 @@ img{max-width:100%;height:auto}
   .pricing-v516 ~ footer .foot{font-size:12.5px!important;line-height:1.5!important}
   .pricing-v516 ~ footer .footer-contact-v530 a{font-size:12.5px!important}
 }
+
+
+/* ===== V5.37 — TARIFS : ECHELLE MOBILE HARMONISEE AVEC PRESTATIONS ===== */
+@media(max-width:560px){
+  /* Ciblage strict de tarifs.html : aucun impact sur les autres pages / desktop */
+  body.pricing-page-v537 header{height:72px!important}
+  body.pricing-page-v537 .nav{width:94%!important;min-height:68px!important;padding:2px 0!important}
+  body.pricing-page-v537 .brand-official{max-width:235px!important;height:58px!important}
+  body.pricing-page-v537 .brand-official img{height:55px!important;max-width:235px!important}
+  body.pricing-page-v537 .nav-toggle{width:42px!important;height:42px!important;font-size:22px!important}
+
+  body.pricing-page-v537 .pricing-hero-v516{padding:30px 0 0!important}
+  body.pricing-page-v537 .pricing-hero-v516 .eyebrow{font-size:11px!important;letter-spacing:2.2px!important}
+  body.pricing-page-v537 .pricing-hero-v516 h1{font-size:38px!important;line-height:1.02!important;margin:8px auto 10px!important;max-width:330px!important}
+  body.pricing-page-v537 .pricing-hero-v516 p{font-size:15px!important;line-height:1.48!important;max-width:340px!important;margin:0 auto 17px!important}
+
+  body.pricing-page-v537 .pricing-tabs-v516{width:94%!important;border-radius:14px!important}
+  body.pricing-page-v537 .pricing-tabs-v516 button{min-height:52px!important;padding:9px 12px!important;font-size:16px!important}
+  body.pricing-page-v537 .pricing-tabs-v516 b{font-size:16px!important}
+  body.pricing-page-v537 .pricing-tabs-v516 small{font-size:12px!important;line-height:1.25!important}
+
+  body.pricing-page-v537 .pricing-content-v516{padding-top:58px!important}
+  body.pricing-page-v537 .pricing-v516 .wrap{width:96%!important}
+  body.pricing-page-v537 .pricing-zone-v516{padding:17px 7px 10px!important}
+  body.pricing-page-v537 .zone-head-v516 h2{font-size:28px!important;line-height:1.05!important}
+  body.pricing-page-v537 .zone-head-v516 p{font-size:15px!important;line-height:1.5!important}
+  body.pricing-page-v537 .zone-head-v516 .eyebrow{font-size:10.5px!important;letter-spacing:1.8px!important}
+
+  body.pricing-page-v537 .price-card-v516{padding:22px 17px 18px!important}
+  body.pricing-page-v537 .price-card-v516>i{width:44px!important;height:44px!important;font-size:20px!important}
+  body.pricing-page-v537 .price-card-v516 h3{font-size:23px!important;line-height:1.12!important}
+  body.pricing-page-v537 .price-card-v516 small{font-size:16px!important;line-height:1.42!important}
+  body.pricing-page-v537 .price-v516{font-size:39px!important}
+  body.pricing-page-v537 .price-v516 em{font-size:16px!important}
+  body.pricing-page-v537 .price-card-v516 ul{font-size:17px!important;line-height:1.62!important}
+  body.pricing-page-v537 .price-card-v516 a{font-size:16px!important;min-height:50px!important;padding:14px 12px!important}
+  body.pricing-page-v537 .vip-badge-v522{font-size:12px!important}
+  body.pricing-page-v537 .vip-month-v522{font-size:15px!important}
+
+  body.pricing-page-v537 .pro-bottom-v516 h3,
+  body.pricing-page-v537 .need-v516 h3{font-size:21px!important}
+  body.pricing-page-v537 .pro-bottom-v516 small,
+  body.pricing-page-v537 .need-v516 small{font-size:15px!important}
+  body.pricing-page-v537 .pro-bottom-v516 p,
+  body.pricing-page-v537 .need-v516 p,
+  body.pricing-page-v537 .pro-bottom-v516 ul{font-size:16.5px!important;line-height:1.58!important}
+
+  body.pricing-page-v537 .free-contact-v520 h3{font-size:21px!important}
+  body.pricing-page-v537 .free-contact-v520 strong{font-size:15px!important}
+  body.pricing-page-v537 .free-contact-v520 p{font-size:16px!important;line-height:1.55!important}
+  body.pricing-page-v537 .free-contact-v520 a{font-size:15.5px!important;min-height:49px!important}
+
+  body.pricing-page-v537 .pricing-info-v518 article{padding:20px 16px!important}
+  body.pricing-page-v537 .pricing-info-v518 article h3{font-size:20px!important}
+  body.pricing-page-v537 .pricing-info-v518 article p,
+  body.pricing-page-v537 .pricing-info-v518 article:first-child p{font-size:16px!important;line-height:1.6!important}
+  body.pricing-page-v537 .remote-note-v520{font-size:15.5px!important;line-height:1.58!important}
+
+  body.pricing-page-v537 .inner-cta{padding:26px 0!important}
+  body.pricing-page-v537 .inner-cta .eyebrow{font-size:10.5px!important}
+  body.pricing-page-v537 .inner-cta h2{font-size:28px!important;line-height:1.04!important}
+  body.pricing-page-v537 .inner-cta p{font-size:15px!important;line-height:1.45!important}
+  body.pricing-page-v537 .inner-cta .btn{font-size:15px!important;min-height:48px!important}
+
+  body.pricing-page-v537 footer .foot{font-size:13px!important;line-height:1.5!important}
+  body.pricing-page-v537 footer .footer-contact-v530 a{font-size:13px!important}
+}

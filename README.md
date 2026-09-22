@@ -99,3 +99,6 @@ V5.33 : finitions responsive mobile (Accueil, Prestations, Tarifs Pro/Particulie
 V5.35 : amélioration finale de la lisibilité mobile de la page Tarifs (Pro et Particuliers), sans modification du rendu desktop.
 
 V5.36 : dernière passe mobile dédiée à Tarifs (Pro + Particuliers) : listes/descriptions +2 px environ, interlignage renforcé, boutons et informations pratiques plus lisibles. Desktop inchangé.
+
+
+V5.37 : harmonisation globale de l’échelle mobile de la page Tarifs avec Prestations. Aucun changement desktop ni sur les autres pages.
