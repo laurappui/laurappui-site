@@ -108,3 +108,5 @@ V5.37 : harmonisation globale de l’échelle mobile de la page Tarifs avec Pres
 Renforcement final de la lisibilité de la page Tarifs sur petits écrans (≤ 420 px), sans modification du rendu desktop ni des autres pages.
 
 V5.39 : recomposition mobile Tarifs + finitions Contact mobile. Desktop inchangé.
+
+V5.40 : optimisation mobile haute lisibilité des pages Professionnels et Particuliers, desktop inchangé.
