@@ -45,3 +45,7 @@ V5.19 : amélioration de la lisibilité des blocs pratiques de la page Tarifs (M
 
 ## V5.22
 Ajout des packs Sérénité VIP Particuliers, fiches détaillées par offre, boutons En savoir plus et formulaires de rendez-vous contextualisés (offre, disponibilités, préférence SMS/e-mail).
+
+
+## V5.23
+Fiches détaillées enrichies : fonctionnement, adaptation des formules, modalités de règlement spécifiques Pro/Particulier et moyens de paiement.
