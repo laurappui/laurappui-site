@@ -54,3 +54,7 @@ Fiches détaillées enrichies : fonctionnement, adaptation des formules, modalit
 ## V5.24
 - Fiches Pro : choix du mode de travail (100 % à distance ou intervention en entreprise) et fréquence définie ensemble.
 - Fiches Particuliers : accompagnement principalement à distance, déplacement exceptionnel possible avec frais kilométriques au départ de Mayenne (53100).
+
+
+## V5.27
+- Tarifs Professionnels : reformulation du bloc Mode d’intervention : « Organisation définie ensemble — Ponctuelle, hebdomadaire ou mensuelle, selon vos besoins et les missions confiées. »
