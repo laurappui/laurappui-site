@@ -1004,3 +1004,37 @@ img{max-width:100%;height:auto}
   .free-contact-v520 .wrap{gap:9px!important}
   .pricing-info-v518{padding-top:14px!important}
 }
+
+/* ===== V5.36 — TARIFS MOBILE CONFORT FINAL (desktop inchangé) ===== */
+@media(max-width:560px){
+  /* Dernière hausse ciblée : descriptions/listes, sans modifier les prix ni la structure */
+  .pricing-switch-v517 .price-card-v516 ul,.price-card-v516 ul{
+    font-size:17px!important;line-height:1.62!important;margin:11px 0 16px!important;
+  }
+  .price-card-v516 li{margin:7px 0!important}
+  .pricing-switch-v517 .price-card-v516 small,.price-card-v516 small{
+    font-size:15.5px!important;line-height:1.45!important;
+  }
+  .pricing-switch-v517 .price-card-v516 a,.price-card-v516 a{
+    font-size:15.5px!important;min-height:48px!important;padding:14px 12px!important;
+  }
+  .pro-bottom-v516 p,.need-v516 p,.pro-bottom-v516 ul{
+    font-size:16px!important;line-height:1.6!important;
+  }
+  .pro-bottom-v516 a,.need-v516 a{font-size:15.5px!important;min-height:47px!important}
+
+  /* Blocs contact et informations pratiques : lecture confortable sur écran étroit */
+  .free-contact-v520 p{font-size:16px!important;line-height:1.58!important}
+  .free-contact-v520 a{font-size:15.5px!important;min-height:48px!important}
+  .pricing-info-v518 article{padding:21px 17px!important;gap:14px!important}
+  .pricing-info-v518 article h3{font-size:20px!important;line-height:1.22!important}
+  .pricing-info-v518 article p,.pricing-info-v518 article:first-child p{
+    font-size:16px!important;line-height:1.62!important;
+  }
+  .pricing-info-v518 article:first-child strong{font-size:16px!important}
+  .remote-note-v520{font-size:15.5px!important;line-height:1.6!important;padding:13px!important}
+
+  /* Footer tarifs */
+  .pricing-v516 ~ footer .foot{font-size:12.5px!important;line-height:1.5!important}
+  .pricing-v516 ~ footer .footer-contact-v530 a{font-size:12.5px!important}
+}
