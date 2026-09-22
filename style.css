@@ -953,3 +953,54 @@ img{max-width:100%;height:auto}
   .same-approach-v513{margin-top:11px!important}
   .about-contact-v513{margin-top:11px!important}
 }
+
+/* ===== V5.35 — TARIFS MOBILE HAUTE LISIBILITE (desktop inchangé) ===== */
+@media(max-width:560px){
+  /* Offres : même largeur, typographie réellement confortable sur smartphone */
+  .pricing-switch-v517 .price-card-v516,.price-card-v516{
+    padding:22px 18px 18px!important;
+  }
+  .pricing-switch-v517 .price-card-v516 h3,.price-card-v516 h3{
+    font-size:22px!important;line-height:1.12!important;margin-bottom:4px!important;
+  }
+  .pricing-switch-v517 .price-card-v516 small,.price-card-v516 small{
+    font-size:14.5px!important;line-height:1.4!important;
+  }
+  .price-v516{font-size:37px!important;line-height:1!important;margin:11px 0!important}
+  .price-v516 em{font-size:15px!important;line-height:1.25!important}
+  .pricing-switch-v517 .price-card-v516 ul,.price-card-v516 ul{
+    font-size:15.5px!important;line-height:1.55!important;margin:10px 0 15px!important;
+  }
+  .price-card-v516 li{margin:6px 0!important}
+  .pricing-switch-v517 .price-card-v516 a,.price-card-v516 a{
+    font-size:15px!important;line-height:1.25!important;min-height:46px!important;padding:13px 11px!important;
+  }
+  .vip-badge-v522{font-size:11.5px!important;padding:6px 10px!important}
+  .vip-month-v522{font-size:13.5px!important}
+
+  /* Cartes complémentaires / sur mesure */
+  .pro-bottom-v516 h3,.need-v516 h3{font-size:20px!important;line-height:1.18!important}
+  .pro-bottom-v516 p,.need-v516 p,.pro-bottom-v516 ul{font-size:15px!important;line-height:1.55!important}
+  .pro-bottom-v516 a,.need-v516 a{font-size:14.5px!important;min-height:44px!important}
+
+  /* Appel gratuit + devis */
+  .free-contact-v520 article{padding:18px 15px!important}
+  .free-contact-v520 h3{font-size:20px!important;line-height:1.15!important}
+  .free-contact-v520 p{font-size:15px!important;line-height:1.5!important}
+  .free-contact-v520 a{font-size:14.5px!important;line-height:1.25!important;min-height:45px!important;padding:13px!important}
+
+  /* Informations pratiques */
+  .pricing-info-v518 article{padding:20px 16px!important;gap:13px!important}
+  .pricing-info-v518 article i{width:40px!important;height:40px!important;flex-basis:40px!important;font-size:17px!important}
+  .pricing-info-v518 article h3{font-size:19px!important;line-height:1.2!important;margin-bottom:7px!important}
+  .pricing-info-v518 article p,.pricing-info-v518 article:first-child p{
+    font-size:15px!important;line-height:1.58!important;
+  }
+  .pricing-info-v518 article:first-child strong{font-size:15px!important}
+  .remote-note-v520{font-size:14.5px!important;line-height:1.55!important;padding:12px!important}
+
+  /* Compense légèrement la hausse de typo par des espacements plus courts */
+  .pricing-switch-v517 .pro-grid-v516,.pricing-switch-v517 .part-grid-v516{gap:10px!important}
+  .free-contact-v520 .wrap{gap:9px!important}
+  .pricing-info-v518{padding-top:14px!important}
+}

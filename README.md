@@ -95,3 +95,5 @@ V5.33 : finitions responsive mobile (Accueil, Prestations, Tarifs Pro/Particulie
 - À propos : portrait et cartes légèrement plus compacts.
 - Footer mobile : suppression du séparateur isolé entre e-mail et téléphone.
 - Rendu ordinateur conservé (modifications limitées au breakpoint mobile <= 560 px).
+
+V5.35 : amélioration finale de la lisibilité mobile de la page Tarifs (Pro et Particuliers), sans modification du rendu desktop.
