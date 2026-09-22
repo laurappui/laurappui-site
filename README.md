@@ -58,3 +58,8 @@ Fiches détaillées enrichies : fonctionnement, adaptation des formules, modalit
 
 ## V5.27
 - Tarifs Professionnels : reformulation du bloc Mode d’intervention : « Organisation définie ensemble — Ponctuelle, hebdomadaire ou mensuelle, selon vos besoins et les missions confiées. »
+
+
+## V5.28
+- Page Prestations enrichie : services clés par public, boutons cohérents et méthode Laur’Appui en 3 étapes.
+- Page Tarifs : bloc Professionnels « Organisation définie ensemble » aéré sur deux niveaux.
