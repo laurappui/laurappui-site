@@ -1105,3 +1105,80 @@ img{max-width:100%;height:auto}
   body.pricing-page-v537 footer .foot{font-size:13px!important;line-height:1.5!important}
   body.pricing-page-v537 footer .footer-contact-v530 a{font-size:13px!important}
 }
+
+/* ===== V5.38 — TARIFS MOBILE : confort renforcé sur petits écrans ===== */
+@media(max-width:420px){
+  body.pricing-page-v537 .pricing-v516 .wrap{width:97%!important}
+  body.pricing-page-v537 .pricing-hero-v516 h1{font-size:40px!important;line-height:1.04!important}
+  body.pricing-page-v537 .pricing-hero-v516 p{font-size:16px!important;line-height:1.5!important}
+  body.pricing-page-v537 .pricing-tabs-v516 button{font-size:17px!important;min-height:56px!important}
+  body.pricing-page-v537 .pricing-tabs-v516 b{font-size:17px!important}
+  body.pricing-page-v537 .pricing-tabs-v516 small{font-size:13px!important}
+  body.pricing-page-v537 .zone-head-v516 h2{font-size:30px!important}
+  body.pricing-page-v537 .zone-head-v516 p{font-size:16px!important;line-height:1.5!important}
+  body.pricing-page-v537 .price-card-v516{padding:22px 16px 19px!important}
+  body.pricing-page-v537 .price-card-v516 h3{font-size:24px!important}
+  body.pricing-page-v537 .price-card-v516 small{font-size:17px!important}
+  body.pricing-page-v537 .price-v516{font-size:42px!important;line-height:1!important}
+  body.pricing-page-v537 .price-v516 em{font-size:17px!important}
+  body.pricing-page-v537 .price-card-v516 ul{font-size:18px!important;line-height:1.58!important}
+  body.pricing-page-v537 .price-card-v516 li{margin:7px 0!important}
+  body.pricing-page-v537 .price-card-v516 a{font-size:16.5px!important;min-height:52px!important}
+  body.pricing-page-v537 .pro-bottom-v516 p,
+  body.pricing-page-v537 .need-v516 p,
+  body.pricing-page-v537 .pro-bottom-v516 ul{font-size:17px!important;line-height:1.58!important}
+  body.pricing-page-v537 .free-contact-v520 p{font-size:17px!important;line-height:1.55!important}
+  body.pricing-page-v537 .pricing-info-v518 article h3{font-size:21px!important}
+  body.pricing-page-v537 .pricing-info-v518 article p,
+  body.pricing-page-v537 .pricing-info-v518 article:first-child p{font-size:17px!important;line-height:1.58!important}
+  body.pricing-page-v537 .remote-note-v520{font-size:16.5px!important}
+  body.pricing-page-v537 footer .foot,
+  body.pricing-page-v537 footer .footer-contact-v530 a{font-size:13.5px!important}
+}
+
+/* ===== V5.39 — TARIFS MOBILE RECOMPOSES + CONTACT MOBILE ===== */
+@media(max-width:560px){
+  /* TARIFS : composition plus aérée, sans changer le desktop */
+  body.pricing-page-v537 .pricing-switch-v517 .pro-grid-v516,
+  body.pricing-page-v537 .pricing-switch-v517 .part-grid-v516{gap:14px!important}
+  body.pricing-page-v537 .price-card-v516{border-radius:17px!important;box-shadow:0 7px 18px rgba(6,54,83,.07)!important;padding:22px 18px 18px!important}
+  body.pricing-page-v537 .price-card-v516 ul{margin:14px 0 18px!important}
+  body.pricing-page-v537 .price-card-v516 li{margin:8px 0!important}
+  body.pricing-page-v537 .price-card-v516 a{border-radius:9px!important}
+  body.pricing-page-v537 .free-contact-v520{padding:16px 0!important}
+  body.pricing-page-v537 .free-contact-v520 .wrap{gap:14px!important}
+  body.pricing-page-v537 .free-contact-v520 article{border-radius:16px!important;box-shadow:0 6px 16px rgba(6,54,83,.05)!important}
+  body.pricing-page-v537 .pricing-info-v516{padding:16px 0 24px!important;background:#fff!important}
+  body.pricing-page-v537 .pricing-info-v516 .wrap{display:grid!important;grid-template-columns:1fr!important;gap:12px!important;width:95%!important}
+  body.pricing-page-v537 .pricing-info-v518 article{border:1px solid var(--line)!important;border-radius:15px!important;background:#fff!important;box-shadow:0 5px 14px rgba(6,54,83,.045)!important;padding:19px 16px!important}
+  body.pricing-page-v537 .pricing-info-v518 article+article{border-top:1px solid var(--line)!important}
+  body.pricing-page-v537 .pricing-info-v518 article h3{margin-bottom:8px!important}
+  body.pricing-page-v537 .remote-note-v520{margin-top:10px!important;border-radius:10px!important}
+  body.pricing-page-v537 .inner-cta{margin-top:0!important}
+
+  /* CONTACT : pleine largeur, champs confortables et carte plus compacte */
+  body.contact-page-v539 .inner-hero{padding:36px 0 32px!important}
+  body.contact-page-v539 .inner-hero h1{font-size:38px!important;line-height:1.05!important}
+  body.contact-page-v539 .inner-content{padding:32px 0 36px!important}
+  body.contact-page-v539 .contact-grid{width:94%!important;gap:22px!important}
+  body.contact-page-v539 .contact-card{padding:24px 20px!important;border-radius:18px!important}
+  body.contact-page-v539 .contact-card h2{font-size:31px!important;line-height:1.05!important}
+  body.contact-page-v539 .contact-form-v520{gap:14px!important}
+  body.contact-page-v539 .contact-form-v520 input,
+  body.contact-page-v539 .contact-form-v520 select,
+  body.contact-page-v539 .contact-form-v520 textarea{font-size:16px!important;min-height:48px!important;padding:13px 12px!important;min-width:0!important}
+  body.contact-page-v539 .contact-form-v520 textarea{min-height:130px!important}
+  body.contact-page-v539 .contact-form-v520 label{min-width:0!important;overflow:hidden!important}
+  body.contact-page-v539 .contact-form-v520 input::placeholder,
+  body.contact-page-v539 .contact-form-v520 textarea::placeholder{font-size:15px!important}
+  body.contact-page-v539 .contact-form-v520 .btn{width:100%!important;min-height:50px!important;background:var(--navy)!important;color:#fff!important;font-size:16px!important;font-weight:800!important}
+  body.contact-page-v539 .contact-pref-v522{padding:14px!important}
+  body.contact-page-v539 .contact-side{padding:28px 20px!important;border-radius:18px!important}
+  body.contact-page-v539 .contact-side img{width:100px!important;height:100px!important}
+  body.contact-page-v539 .contact-side h3{font-size:29px!important;margin:4px 0 12px!important}
+  body.contact-page-v539 .contact-side p{font-size:15px!important}
+  body.contact-page-v539 .direct-contact-v530{margin:18px 0!important}
+  body.contact-page-v539 .direct-contact-v530 a{font-size:15px!important;line-height:1.35!important;padding:12px 10px!important;overflow-wrap:anywhere!important;word-break:normal!important}
+  body.contact-page-v539 .contact-side em{margin-top:20px!important;font-size:18px!important}
+  body.contact-page-v539 footer .foot{padding-top:16px!important;padding-bottom:16px!important}
+}

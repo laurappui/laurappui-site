@@ -102,3 +102,9 @@ V5.36 : dernière passe mobile dédiée à Tarifs (Pro + Particuliers) : listes/
 
 
 V5.37 : harmonisation globale de l’échelle mobile de la page Tarifs avec Prestations. Aucun changement desktop ni sur les autres pages.
+
+
+## V5.38
+Renforcement final de la lisibilité de la page Tarifs sur petits écrans (≤ 420 px), sans modification du rendu desktop ni des autres pages.
+
+V5.39 : recomposition mobile Tarifs + finitions Contact mobile. Desktop inchangé.
