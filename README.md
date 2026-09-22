@@ -63,3 +63,10 @@ Fiches détaillées enrichies : fonctionnement, adaptation des formules, modalit
 ## V5.28
 - Page Prestations enrichie : services clés par public, boutons cohérents et méthode Laur’Appui en 3 étapes.
 - Page Tarifs : bloc Professionnels « Organisation définie ensemble » aéré sur deux niveaux.
+
+
+## V5.29
+- Page Prestations : rapprochement visuel du bloc « Deux univers » et de la méthode en 3 étapes.
+- Page Professionnels : modes de travail, adaptation de la prestation, accès tarifs et appel gratuit.
+- Page Particuliers : déroulé en 3 étapes, accompagnement principalement à distance, déplacement exceptionnel, adaptation et accès tarifs/appel gratuit.
+- Page Tarifs : conservation des ajustements V5.28 validés.
