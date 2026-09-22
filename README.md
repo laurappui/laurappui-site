@@ -110,3 +110,11 @@ Renforcement final de la lisibilité de la page Tarifs sur petits écrans (≤ 4
 V5.39 : recomposition mobile Tarifs + finitions Contact mobile. Desktop inchangé.
 
 V5.40 : optimisation mobile haute lisibilité des pages Professionnels et Particuliers, desktop inchangé.
+
+
+## V5.41 — Paiement en ligne Particuliers
+Boutons de paiement ajoutés pour Diagnostic Budget, Sérénité Budget, Sérénité VIP Trimestriel et Sérénité VIP Annuel.
+
+Le site étant statique, l’intégration est prévue pour Stripe Payment Links. Pour activer les paiements, ouvrir `payment-links.js` et renseigner les quatre liens `https://buy.stripe.com/...` créés dans le compte Stripe Laur’Appui. Tant qu’un lien est vide, le bouton affiche un message d’attente et aucun paiement ne peut être lancé.
+
+Dossier Serein et Besoin ponctuel restent hors paiement direct.

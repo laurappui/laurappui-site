@@ -1236,3 +1236,12 @@ img{max-width:100%;height:auto}
   body:has(.service-extra-v529) footer .foot{font-size:12px!important;line-height:1.45!important}
   body:has(.service-extra-v529) footer .footer-contact-v530 a{font-size:12px!important}
 }
+
+
+/* V5.41 — Paiement en ligne particuliers */
+.payment-actions-v541{display:grid;gap:8px;margin-top:10px}
+.payment-btn-v541{display:flex!important;align-items:center;justify-content:center;min-height:42px;background:#c78e43!important;color:#fff!important;border-radius:7px;text-decoration:none;font-weight:700;padding:10px 12px}
+.payment-btn-v541:hover{filter:brightness(.96)}
+.payment-btn-v541.is-disabled{opacity:.72;cursor:not-allowed}
+.payment-note-v541{font-size:12px;line-height:1.35;color:#315b70;text-align:center;margin:2px 0 0}
+@media(max-width:700px){.payment-btn-v541{min-height:46px;font-size:14px}.payment-note-v541{font-size:12px}}
