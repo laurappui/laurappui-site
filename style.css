@@ -823,3 +823,94 @@ img{max-width:100%;height:auto}
   .price-card-v516{padding:15px 12px!important}
   .offer-process-v523,.offer-flex-v523,.offer-payment-v523{margin-top:14px!important;padding:16px!important}
 }
+
+/* ===== V5.33 — FINITIONS MOBILE (desktop strictement inchangé) ===== */
+@media(max-width:560px){
+  /* Header / logo */
+  .brand-official{max-width:222px!important;height:55px!important}
+  .brand-official img{height:52px!important;max-width:222px!important}
+
+  /* Accueil : cartes et footer plus lisibles */
+  .cards{gap:10px!important}
+  .card,.solution-card{grid-template-columns:42px 1fr!important;padding:17px 15px!important}
+  .card h3,.solution-card h3{font-size:19px!important}
+  .card p,.solution-card p{font-size:12.5px!important;line-height:1.42!important}
+  footer{padding:18px 0!important}
+  .foot{font-size:11.5px!important;line-height:1.45!important}
+  .footer-contact-v530 a{font-size:11.5px!important}
+
+  /* Prestations : moins de vide, cartes confortables, méthode lisible */
+  .inner-hero{padding:34px 0 32px!important}
+  .inner-hero h1{font-size:35px!important;line-height:1.02!important;margin:8px 0 12px!important}
+  .inner-hero p{font-size:14px!important;line-height:1.55!important}
+  .inner-content{padding:38px 0 42px!important}
+  .audience-grid{gap:14px!important}
+  .audience-panel{padding:21px 16px!important;border-radius:17px!important}
+  .audience-panel span{font-size:10px!important}
+  .audience-panel h2{font-size:25px!important;line-height:1.05!important;margin:10px 0!important}
+  .audience-panel p{min-height:0!important;font-size:14px!important;line-height:1.55!important}
+  .audience-services-v528 li{font-size:13px!important;line-height:1.45!important}
+  .audience-btn-v528{font-size:13px!important;padding:12px 10px!important}
+  .inner-note{margin:25px auto 0!important;padding:19px 10px 10px!important}
+  .inner-note strong{font-size:24px!important;line-height:1.05!important}
+  .inner-note p{font-size:13px!important;line-height:1.4!important}
+  .inner-note + .method-v528{margin-top:20px!important}
+  .method-v528 article{padding:18px 14px!important}
+  .method-v528 h3{font-size:18px!important}
+  .method-v528 p{font-size:12.5px!important;line-height:1.45!important}
+
+  /* Tarifs : utiliser réellement la largeur du téléphone */
+  .pricing-v516 .wrap{width:96%!important}
+  .pricing-hero-v516{padding:26px 0 0!important}
+  .pricing-hero-v516 h1{font-size:34px!important;line-height:1.02!important}
+  .pricing-hero-v516 p{font-size:13px!important;line-height:1.4!important;margin-bottom:18px!important}
+  .pricing-tabs-v516{width:96%!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important;border-radius:16px!important}
+  .pricing-tabs-v516 a{padding:11px 10px!important;font-size:15px!important;min-height:46px!important}
+  .pricing-tabs-v516 b{font-size:14px!important}
+  .pricing-tabs-v516 small{font-size:10.5px!important}
+  .pricing-content-v516{padding-top:64px!important;padding-bottom:20px!important}
+  .pricing-switch-v517 .pricing-zone-v516,.pricing-zone-v516{padding:18px 8px 10px!important;border-radius:15px!important}
+  .zone-head-v516{padding:0 5px 14px!important}
+  .zone-head-v516 h2{font-size:25px!important;line-height:1.05!important}
+  .zone-head-v516 p{font-size:12.5px!important;line-height:1.45!important}
+  .pro-grid-v516,.part-grid-v516{gap:11px!important}
+  .pricing-switch-v517 .price-card-v516,.price-card-v516{width:100%!important;box-sizing:border-box!important;min-height:0!important;padding:19px 16px 15px!important;border-radius:14px!important}
+  .pricing-switch-v517 .price-card-v516>i,.price-card-v516>i{width:42px!important;height:42px!important;font-size:19px!important;margin-bottom:9px!important}
+  .pricing-switch-v517 .price-card-v516 h3,.price-card-v516 h3{font-size:20px!important;line-height:1.1!important}
+  .pricing-switch-v517 .price-card-v516 small,.price-card-v516 small{font-size:12px!important}
+  .price-v516{font-size:31px!important;margin:10px 0!important}
+  .price-v516 em{font-size:13px!important}
+  .pricing-switch-v517 .price-card-v516 ul,.price-card-v516 ul{font-size:13px!important;line-height:1.5!important;margin:8px 0 14px!important}
+  .price-card-v516 li{margin:6px 0!important}
+  .pricing-switch-v517 .price-card-v516 a,.price-card-v516 a{font-size:13px!important;padding:12px 10px!important;min-height:40px!important;box-sizing:border-box!important}
+  .vip-badge-v522{font-size:9.5px!important;padding:5px 8px!important}
+  .vip-month-v522{font-size:12px!important}
+  .pro-bottom-v516 article,.need-v516{padding:16px 13px!important}
+  .pro-bottom-v516 h3,.need-v516 h3{font-size:18px!important}
+  .pro-bottom-v516 p,.need-v516 p,.pro-bottom-v516 ul{font-size:12.5px!important;line-height:1.45!important}
+  .free-contact-v520{padding-top:8px!important}
+  .free-contact-v520 .wrap{width:96%!important;gap:11px!important}
+  .free-contact-v520 article{padding:16px 14px!important;gap:10px!important}
+  .free-contact-v520 h3{font-size:18px!important}
+  .free-contact-v520 p{font-size:12.5px!important;line-height:1.45!important}
+  .free-contact-v520 a{font-size:12.5px!important;padding:11px 12px!important}
+  .pricing-info-v518{padding:18px 0 22px!important}
+  .pricing-info-v518 .wrap{width:96%!important}
+  .pricing-info-v518 article{padding:18px 15px!important;gap:12px!important;min-height:0!important}
+  .pricing-info-v518 article i{width:38px!important;height:38px!important;flex-basis:38px!important;font-size:16px!important}
+  .pricing-info-v518 article h3{font-size:17px!important;margin-bottom:6px!important}
+  .pricing-info-v518 article p,.pricing-info-v518 article:first-child p{font-size:12.5px!important;line-height:1.5!important}
+  .remote-note-v520{font-size:12px!important;line-height:1.45!important;padding:9px!important}
+
+  /* À propos : portrait moins haut et contenu légèrement resserré */
+  .about-intro-v513{padding:24px 0 34px!important}
+  .portrait-card-v513{height:445px!important}
+  .portrait-words{font-size:22px!important;line-height:1.45!important}
+  .portrait-caption{font-size:14px!important;line-height:1.4!important}
+  .story-v513 h1{font-size:37px!important;line-height:1!important}
+  .story-v513 p{font-size:14px!important;line-height:1.6!important}
+  .experience-v513{gap:11px!important;margin-top:20px!important}
+  .experience-v513 article{padding:18px 15px!important}
+  .same-approach-v513{margin-top:14px!important;padding:17px 15px!important}
+  .about-contact-v513{margin-top:14px!important}
+}

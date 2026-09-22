@@ -85,3 +85,5 @@ Fiches détaillées enrichies : fonctionnement, adaptation des formules, modalit
 - Sections, cartes, valeurs, présentation et CTA moins hauts sur smartphone.
 - Pages Prestations, Professionnels, Particuliers, Tarifs, Contact et fiches offres optimisées pour petits écrans.
 - Coordonnées professionnelles conservées : laurappui53.pro@gmail.com / 07 67 49 68 82.
+
+V5.33 : finitions responsive mobile (Accueil, Prestations, Tarifs Pro/Particuliers, À propos), sans modification du rendu desktop.
