@@ -70,3 +70,10 @@ Fiches détaillées enrichies : fonctionnement, adaptation des formules, modalit
 - Page Professionnels : modes de travail, adaptation de la prestation, accès tarifs et appel gratuit.
 - Page Particuliers : déroulé en 3 étapes, accompagnement principalement à distance, déplacement exceptionnel, adaptation et accès tarifs/appel gratuit.
 - Page Tarifs : conservation des ajustements V5.28 validés.
+
+
+## V5.30 — Coordonnées professionnelles
+- E-mail : laurappui53.pro@gmail.com
+- Téléphone : 07 67 49 68 82
+- Coordonnées ajoutées aux pieds de page avec liens mailto/tel.
+- Coordonnées directes ajoutées à la page Contact.
