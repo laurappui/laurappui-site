@@ -41,3 +41,7 @@ V5.18 : tarifs élargis, frais de déplacement au départ de Mayenne (53100), pr
 
 
 V5.19 : amélioration de la lisibilité des blocs pratiques de la page Tarifs (Mayenne 53100, frais de déplacement et prestations à distance), appliquée aux vues Professionnels et Particuliers.
+
+
+## V5.22
+Ajout des packs Sérénité VIP Particuliers, fiches détaillées par offre, boutons En savoir plus et formulaires de rendez-vous contextualisés (offre, disponibilités, préférence SMS/e-mail).
