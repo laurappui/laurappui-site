@@ -914,3 +914,42 @@ img{max-width:100%;height:auto}
   .same-approach-v513{margin-top:14px!important;padding:17px 15px!important}
   .about-contact-v513{margin-top:14px!important}
 }
+
+/* ===== V5.34 — PASSE FINALE MOBILE (desktop inchangé) ===== */
+@media(max-width:560px){
+  /* Footer : supprime le séparateur isolé lorsque les coordonnées passent sur 2 lignes */
+  .footer-contact-v530{font-size:0!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:5px!important}
+  .footer-contact-v530 a{font-size:12px!important;line-height:1.4!important}
+
+  /* Prestations : rapproche les sections sans réduire la lisibilité */
+  .inner-content{padding:34px 0 36px!important}
+  .inner-note{margin-top:20px!important;padding-top:15px!important}
+  .inner-note + .method-v528{margin-top:16px!important}
+  .method-v528{gap:0!important}
+
+  /* Tarifs Pro + Particuliers : lisibilité renforcée */
+  .pricing-switch-v517 .price-card-v516,.price-card-v516{padding:20px 17px 16px!important}
+  .pricing-switch-v517 .price-card-v516 h3,.price-card-v516 h3{font-size:21px!important}
+  .pricing-switch-v517 .price-card-v516 small,.price-card-v516 small{font-size:13px!important;line-height:1.35!important}
+  .price-v516{font-size:33px!important;line-height:1!important}
+  .price-v516 em{font-size:14px!important}
+  .pricing-switch-v517 .price-card-v516 ul,.price-card-v516 ul{font-size:14px!important;line-height:1.52!important}
+  .pricing-switch-v517 .price-card-v516 a,.price-card-v516 a{font-size:14px!important;min-height:44px!important;padding:13px 10px!important}
+  .pro-bottom-v516 h3,.need-v516 h3{font-size:19px!important}
+  .pro-bottom-v516 p,.need-v516 p,.pro-bottom-v516 ul{font-size:13.5px!important;line-height:1.5!important}
+  .free-contact-v520 h3{font-size:19px!important}
+  .free-contact-v520 p{font-size:13.5px!important;line-height:1.5!important}
+  .free-contact-v520 a{font-size:13.5px!important;min-height:43px!important}
+  .pricing-info-v518 article{padding:19px 16px!important}
+  .pricing-info-v518 article h3{font-size:18px!important}
+  .pricing-info-v518 article p,.pricing-info-v518 article:first-child p{font-size:13.5px!important;line-height:1.55!important}
+  .remote-note-v520{font-size:13px!important;line-height:1.5!important}
+
+  /* À propos : portrait et espacements légèrement plus compacts */
+  .about-intro-v513{padding:20px 0 30px!important}
+  .portrait-card-v513{height:420px!important}
+  .experience-v513{gap:9px!important;margin-top:17px!important}
+  .experience-v513 article{padding:17px 15px!important}
+  .same-approach-v513{margin-top:11px!important}
+  .about-contact-v513{margin-top:11px!important}
+}
