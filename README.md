@@ -77,3 +77,11 @@ Fiches détaillées enrichies : fonctionnement, adaptation des formules, modalit
 - Téléphone : 07 67 49 68 82
 - Coordonnées ajoutées aux pieds de page avec liens mailto/tel.
 - Coordonnées directes ajoutées à la page Contact.
+
+## V5.32 — optimisation mobile
+- Version ordinateur conservée.
+- En-tête et menu mobile plus compacts.
+- Hero mobile raccourci et typographie rééquilibrée.
+- Sections, cartes, valeurs, présentation et CTA moins hauts sur smartphone.
+- Pages Prestations, Professionnels, Particuliers, Tarifs, Contact et fiches offres optimisées pour petits écrans.
+- Coordonnées professionnelles conservées : laurappui53.pro@gmail.com / 07 67 49 68 82.
