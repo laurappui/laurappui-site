@@ -49,3 +49,8 @@ Ajout des packs Sérénité VIP Particuliers, fiches détaillées par offre, bou
 
 ## V5.23
 Fiches détaillées enrichies : fonctionnement, adaptation des formules, modalités de règlement spécifiques Pro/Particulier et moyens de paiement.
+
+
+## V5.24
+- Fiches Pro : choix du mode de travail (100 % à distance ou intervention en entreprise) et fréquence définie ensemble.
+- Fiches Particuliers : accompagnement principalement à distance, déplacement exceptionnel possible avec frais kilométriques au départ de Mayenne (53100).
