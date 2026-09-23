@@ -1297,3 +1297,11 @@ img{max-width:100%;height:auto}
   .legal-page-v543 .legal-contact-v543 .btn{width:100%!important;min-height:48px!important;font-size:14px!important}
   .legal-page-v543 + footer .foot,.legal-page-v543 ~ footer .foot{font-size:12px!important;line-height:1.5!important}
 }
+
+/* ===== V5.47 — Correctif accueil après optimisation SEO ===== */
+/* Le nouveau H1 est plus long : on l'adapte sur ordinateur pour conserver
+   la signature entièrement dans le bandeau hero, sans chevauchement. */
+@media (min-width:901px){
+  .hero h1{font-size:58px!important;line-height:1.02!important;margin-top:14px!important}
+  .signature{margin-top:18px!important;font-size:22px!important}
+}

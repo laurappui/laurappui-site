@@ -140,3 +140,8 @@ Dossier Serein et Besoin ponctuel restent hors paiement direct.
 - H1 des pages prioritaires clarifiés.
 - Données structurées ProfessionalService ajoutées à l’accueil.
 - Aucun changement de design, tarifs ou fonctionnalités.
+
+## V5.47 — Correctif visuel accueil SEO
+- Corrige le débordement de « Organiser · Simplifier · Avancer » sous le hero.
+- Adapte uniquement la taille du H1 et l'espacement de la signature sur ordinateur.
+- Conserve le SEO local Mayenne, le sitemap, le robots.txt, les tarifs et les fonctionnalités.
