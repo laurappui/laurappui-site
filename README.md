@@ -145,3 +145,8 @@ Dossier Serein et Besoin ponctuel restent hors paiement direct.
 - Corrige le débordement de « Organiser · Simplifier · Avancer » sous le hero.
 - Adapte uniquement la taille du H1 et l'espacement de la signature sur ordinateur.
 - Conserve le SEO local Mayenne, le sitemap, le robots.txt, les tarifs et les fonctionnalités.
+
+## V5.48 — Correctif hero desktop responsive
+- Augmentation de la hauteur du hero uniquement sur ordinateur.
+- La signature « Organiser · Simplifier · Avancer » reste dans le bandeau crème.
+- Aucun changement sur la mise en page mobile ni sur le SEO.

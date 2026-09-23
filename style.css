@@ -1305,3 +1305,15 @@ img{max-width:100%;height:auto}
   .hero h1{font-size:58px!important;line-height:1.02!important;margin-top:14px!important}
   .signature{margin-top:18px!important;font-size:22px!important}
 }
+
+/* ===== V5.48 — Correctif hero desktop uniquement ===== */
+/* Le hero gagne de la hauteur sur ordinateur afin que la signature reste
+   dans le bandeau crème. Les règles mobile existantes restent inchangées. */
+@media (min-width:901px){
+  .hero,.hero-copy,.hero-photo{height:600px!important;min-height:600px!important}
+  .hero-copy{padding-top:42px!important;padding-bottom:42px!important}
+  .hero h1{font-size:58px!important;line-height:1.02!important;margin:12px 0 6px!important}
+  .tagline{margin-bottom:18px!important}
+  .buttons{margin-top:22px!important}
+  .signature{margin-top:18px!important;font-size:22px!important;white-space:nowrap!important}
+}
