@@ -118,3 +118,10 @@ Boutons de paiement ajoutés pour Diagnostic Budget, Sérénité Budget, Sérén
 Le site étant statique, l’intégration est prévue pour Stripe Payment Links. Pour activer les paiements, ouvrir `payment-links.js` et renseigner les quatre liens `https://buy.stripe.com/...` créés dans le compte Stripe Laur’Appui. Tant qu’un lien est vide, le bouton affiche un message d’attente et aucun paiement ne peut être lancé.
 
 Dossier Serein et Besoin ponctuel restent hors paiement direct.
+
+
+## V5.42 — Politique de confidentialité
+- Nouvelle page `politique-confidentialite.html`.
+- Lien Confidentialité ajouté au footer de toutes les pages.
+- Information RGPD ajoutée sous le formulaire de contact.
+- Rubrique paiement en ligne / Stripe incluse.
