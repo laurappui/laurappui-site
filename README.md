@@ -125,3 +125,11 @@ Dossier Serein et Besoin ponctuel restent hors paiement direct.
 - Lien Confidentialité ajouté au footer de toutes les pages.
 - Information RGPD ajoutée sous le formulaire de contact.
 - Rubrique paiement en ligne / Stripe incluse.
+
+
+## V5.43
+- Ajout de `cgv.html` (Particuliers + Professionnels).
+- Ajout du lien CGV dans tous les footers.
+- Acceptation des CGV avant les boutons de paiement en ligne.
+- Amélioration de la lisibilité mobile de la Politique de confidentialité.
+- À compléter avant mise en production B2C : identité légale complète et médiateur de la consommation effectivement désigné.
