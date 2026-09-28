@@ -1,6 +1,6 @@
 import {isAdmin} from './_admin-auth.js';
 const bad=(e,s=400)=>Response.json({ok:false,error:e},{status:s});
-async function ensureClientColumns(env){for(const sql of ["ALTER TABLE clients ADD COLUMN siret TEXT","ALTER TABLE clients ADD COLUMN vat_number TEXT","ALTER TABLE clients ADD COLUMN postal_code TEXT","ALTER TABLE clients ADD COLUMN city TEXT","ALTER TABLE clients ADD COLUMN country TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}}
+async function ensureClientColumns(env){for(const sql of ["ALTER TABLE clients ADD COLUMN siret TEXT","ALTER TABLE clients ADD COLUMN vat_number TEXT","ALTER TABLE clients ADD COLUMN postal_code TEXT","ALTER TABLE clients ADD COLUMN city TEXT","ALTER TABLE clients ADD COLUMN country TEXT","ALTER TABLE clients ADD COLUMN source TEXT DEFAULT 'manuel'","ALTER TABLE clients ADD COLUMN updated_at TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}}
 async function ensureDocColumns(env){for(const sql of ["ALTER TABLE documents ADD COLUMN payment_plan TEXT","ALTER TABLE documents ADD COLUMN quote_date TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}}
 async function auth(request,env){return await isAdmin(request,env)}
 export async function onRequestGet({request,env}){
@@ -39,7 +39,20 @@ export async function onRequestPost({request,env}){
   if(siret&&!/^\d{14}$/.test(siret))return bad('SIRET : renseignez 14 chiffres ou laissez le champ vide');
   if(!String(b.email||'').trim())return bad('E-mail obligatoire');
   if(!String(b.phone||'').trim())return bad('Téléphone obligatoire');
-  const r=await env.DB.prepare('INSERT INTO clients(type,name,company,email,phone,address,notes,siret,vat_number,postal_code,city,country) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)').bind(type,b.name.trim(),type==='professionnel'?(b.company||'').trim():'',b.email||'',b.phone||'',b.address||'',b.notes||'',type==='professionnel'?siret:'',type==='professionnel'?(b.vat_number||'').trim():'',b.postal_code||'',b.city||'',b.country||'France').run(); return Response.json({ok:true,id:r.meta.last_row_id});
+  const status=['prospect','actif','ancien','archive'].includes(b.status)?b.status:'actif'; const r=await env.DB.prepare('INSERT INTO clients(type,name,company,email,phone,address,notes,siret,vat_number,postal_code,city,country,status,source,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)').bind(type,b.name.trim(),type==='professionnel'?(b.company||'').trim():'',b.email||'',b.phone||'',b.address||'',b.notes||'',type==='professionnel'?siret:'',type==='professionnel'?(b.vat_number||'').trim():'',b.postal_code||'',b.city||'',b.country||'France',status,'manuel').run(); return Response.json({ok:true,id:r.meta.last_row_id});
+ }
+ if(b.action==='client.update'){
+  await ensureClientColumns(env); const id=Number(b.id); if(!id)return bad('Client invalide');
+  const type=b.type==='professionnel'?'professionnel':'particulier', siret=String(b.siret||'').replace(/\s/g,'');
+  if(!String(b.name||'').trim()||!String(b.email||'').trim()||!String(b.phone||'').trim())return bad('Nom, e-mail et téléphone obligatoires');
+  if(type==='professionnel'&&!String(b.company||'').trim())return bad('Raison sociale obligatoire pour un professionnel'); if(siret&&!/^\d{14}$/.test(siret))return bad('SIRET invalide');
+  const status=['prospect','actif','ancien','archive'].includes(b.status)?b.status:'actif';
+  await env.DB.prepare('UPDATE clients SET type=?,name=?,company=?,email=?,phone=?,address=?,notes=?,siret=?,vat_number=?,postal_code=?,city=?,country=?,status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(type,b.name.trim(),type==='professionnel'?(b.company||'').trim():'',b.email.trim(),b.phone.trim(),b.address||'',b.notes||'',type==='professionnel'?siret:'',type==='professionnel'?(b.vat_number||'').trim():'',b.postal_code||'',b.city||'',b.country||'France',status,id).run(); return Response.json({ok:true});
+ }
+ if(b.action==='client.delete'){
+  const id=Number(b.id); if(!id)return bad('Client invalide'); const c=await env.DB.prepare('SELECT email FROM clients WHERE id=?').bind(id).first(); if(!c)return bad('Client introuvable');
+  const [d,t,ai,pay]=await Promise.all([env.DB.prepare('SELECT COUNT(*) n FROM documents WHERE client_id=?').bind(id).first(),env.DB.prepare('SELECT COUNT(*) n FROM tasks WHERE client_id=?').bind(id).first(),env.DB.prepare('SELECT COUNT(*) n FROM abby_invoices WHERE client_id=?').bind(id).first(),env.DB.prepare('SELECT COUNT(*) n FROM payments WHERE lower(customer_email)=lower(?)').bind(c.email||'').first()]);
+  if((d?.n||0)+(t?.n||0)+(ai?.n||0)+(pay?.n||0)>0)return bad('Cette fiche possède un historique. Passez-la en « Archivé » au lieu de la supprimer.'); await env.DB.prepare('DELETE FROM clients WHERE id=?').bind(id).run(); return Response.json({ok:true});
  }
  if(b.action==='document.create'){
   await ensureDocColumns(env);

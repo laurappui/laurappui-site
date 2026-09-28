@@ -34,9 +34,13 @@ export async function onRequestPost({ request, env }) {
   const token = crypto.randomUUID();
   const offerKey = s.metadata?.offer_key || '';
   const offerLabel = s.metadata?.offer_label || 'Prestation Laur’Appui';
+  const email=(s.customer_details?.email || s.customer_email || '').trim().toLowerCase(), name=(s.customer_details?.name || 'Client Stripe').trim();
+  for(const sql of ["ALTER TABLE clients ADD COLUMN source TEXT DEFAULT 'manuel'","ALTER TABLE clients ADD COLUMN updated_at TEXT","ALTER TABLE payments ADD COLUMN client_id INTEGER"]){try{await env.DB.prepare(sql).run()}catch{}}
+  let clientId=null;
+  if(email){let c=await env.DB.prepare('SELECT id FROM clients WHERE lower(email)=lower(?) LIMIT 1').bind(email).first();if(c){clientId=c.id;await env.DB.prepare("UPDATE clients SET status='actif',source=CASE WHEN source IS NULL THEN 'stripe' ELSE source END,updated_at=CURRENT_TIMESTAMP WHERE id=?").bind(clientId).run()}else{const cr=await env.DB.prepare("INSERT INTO clients(type,name,email,phone,status,source,updated_at) VALUES('particulier',?,?,?,'actif','stripe',CURRENT_TIMESTAMP)").bind(name,email,s.customer_details?.phone||'À compléter').run();clientId=cr.meta.last_row_id}}
   await env.DB.prepare(`INSERT OR IGNORE INTO payments
-    (stripe_session_id,stripe_payment_intent,receipt_token,customer_email,customer_name,offer_key,offer_label,amount_total,currency,paid_at)
-    VALUES (?,?,?,?,?,?,?,?,?,?)`)
-    .bind(s.id, s.payment_intent || '', token, s.customer_details?.email || s.customer_email || '', s.customer_details?.name || '', offerKey, offerLabel, s.amount_total || 0, s.currency || 'eur', new Date().toISOString()).run();
+    (stripe_session_id,stripe_payment_intent,receipt_token,customer_email,customer_name,offer_key,offer_label,amount_total,currency,paid_at,client_id)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?)`)
+    .bind(s.id, s.payment_intent || '', token, email, name, offerKey, offerLabel, s.amount_total || 0, s.currency || 'eur', new Date().toISOString(),clientId).run();
   return new Response('ok');
 }

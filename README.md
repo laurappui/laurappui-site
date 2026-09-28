@@ -179,3 +179,10 @@ Nouvelle page privée `admin-bureau.html` : tableau de bord, clients, devis/fact
 - Contrôle du SIRET (14 chiffres) uniquement avant passage d’un devis professionnel à « À facturer Abby ».
 - E-mail et téléphone obligatoires dans la fiche client interne.
 - Formulaire public : Entreprise + SIRET facultatif apparaissent uniquement si « Professionnel » est sélectionné.
+
+
+## V11 CRM Clients
+- Statuts Prospect / Client actif / Ancien client / Archivé.
+- Modification et suppression sécurisée des fiches.
+- Demandes du formulaire public enregistrées automatiquement comme prospects D1.
+- Paiements Stripe : création automatique de la fiche si l'e-mail n'existe pas, sinon rattachement et passage en client actif.
