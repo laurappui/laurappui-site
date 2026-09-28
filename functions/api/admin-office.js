@@ -16,6 +16,18 @@ export async function onRequestGet({request,env}){
   return Response.json({ok:true,metrics:{clients:c.n,documents:d.n,tasks:t.n,payments:p.n,paid:d.paid,stripe:p.cents},recent:recent.results||[]});
  }
  if(section==='clients'){await ensureClientColumns(env);const r=await env.DB.prepare('SELECT * FROM clients ORDER BY id DESC').all();return Response.json({ok:true,items:r.results||[]})}
+ if(section==='client-detail'){
+  await ensureClientColumns(env); const id=Number(u.searchParams.get('id')); if(!id)return bad('Client invalide');
+  const client=await env.DB.prepare('SELECT * FROM clients WHERE id=?').bind(id).first(); if(!client)return bad('Client introuvable',404);
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
+  const [documents,abby,tasks,payments]=await Promise.all([
+   env.DB.prepare('SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id WHERE d.client_id=? ORDER BY d.id DESC').bind(id).all(),
+   env.DB.prepare('SELECT * FROM abby_invoices WHERE client_id=? ORDER BY id DESC').bind(id).all(),
+   env.DB.prepare('SELECT * FROM tasks WHERE client_id=? ORDER BY id DESC').bind(id).all(),
+   env.DB.prepare('SELECT * FROM payments WHERE lower(customer_email)=lower(?) ORDER BY datetime(paid_at) DESC').bind(client.email||'').all()
+  ]);
+  return Response.json({ok:true,client,documents:documents.results||[],abby:abby.results||[],tasks:tasks.results||[],payments:payments.results||[]});
+ }
  if(section==='documents'){
   await ensureDocColumns(env);
   await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
