@@ -1,7 +1,17 @@
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function labelRequest(v){return ({'devis':'Demande de devis gratuit','appel-gratuit':'Appel gratuit — 15 min','rendez-vous':'Prendre rendez-vous','autre':'Autre demande'})[v]||v||'Demande'}
+function labelContact(v){return ({email:'E-mail',sms:'SMS'})[v]||v||'Non précisée'}
 async function ensure(env){
- await env.DB.prepare(`CREATE TABLE IF NOT EXISTS contact_requests (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, request_type TEXT, offer TEXT, subject TEXT, message TEXT, availability TEXT, preferred_contact TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`).run();
- for(const sql of ["ALTER TABLE clients ADD COLUMN siret TEXT","ALTER TABLE clients ADD COLUMN source TEXT DEFAULT 'manuel'","ALTER TABLE clients ADD COLUMN updated_at TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}
+ await env.DB.prepare(`CREATE TABLE IF NOT EXISTS contact_requests (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, request_type TEXT, offer TEXT, subject TEXT, message TEXT, availability TEXT, preferred_contact TEXT, admin_email_status TEXT DEFAULT 'non-configure', client_email_status TEXT DEFAULT 'non-configure', created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`).run();
+ for(const sql of ["ALTER TABLE clients ADD COLUMN siret TEXT","ALTER TABLE clients ADD COLUMN source TEXT DEFAULT 'manuel'","ALTER TABLE clients ADD COLUMN updated_at TEXT","ALTER TABLE contact_requests ADD COLUMN admin_email_status TEXT DEFAULT 'non-configure'","ALTER TABLE contact_requests ADD COLUMN client_email_status TEXT DEFAULT 'non-configure'"]){try{await env.DB.prepare(sql).run()}catch{}}
 }
+async function sendEmail(env,{to,subject,html,replyTo}){
+ if(!env.RESEND_API_KEY)return {ok:false,status:'non-configure'};
+ const from=env.EMAIL_FROM||'Laur’Appui <onboarding@resend.dev>';
+ const r=await fetch('https://api.resend.com/emails',{method:'POST',headers:{'content-type':'application/json','authorization':`Bearer ${env.RESEND_API_KEY}`},body:JSON.stringify({from,to:[to],subject,html,reply_to:replyTo||undefined})});
+ if(!r.ok)return {ok:false,status:'echec'}; return {ok:true,status:'envoye'};
+}
+function shell(content){return `<!doctype html><html><body style="margin:0;background:#f5f0e7;font-family:Arial,sans-serif;color:#122d49"><div style="max-width:680px;margin:0 auto;padding:30px 18px"><div style="background:#fff;border-radius:18px;padding:30px;border:1px solid #e5d9c8"><h1 style="font-family:Georgia,serif;margin:0 0 6px;color:#122d49">Laur’Appui</h1><p style="margin:0 0 24px;color:#b67a43">Organiser · Simplifier · Avancer</p>${content}<hr style="border:0;border-top:1px solid #e9e0d5;margin:28px 0"><p style="font-size:14px;line-height:1.6">Laura ENOUF — Laur’Appui<br>07 67 49 68 82<br>laurappui53.pro@gmail.com</p></div></div></body></html>`}
 export async function onRequestPost({request,env}){
  if(!env.DB)return Response.json({ok:false,error:'Service temporairement indisponible'},{status:503}); const b=await request.json().catch(()=>null); if(!b)return Response.json({ok:false,error:'Données invalides'},{status:400}); if(b.website)return Response.json({ok:true});
  const name=String(b.nom||'').trim(),email=String(b.email||'').trim().toLowerCase(),phone=String(b.telephone||'').trim(); if(!name||!email||!phone)return Response.json({ok:false,error:'Nom, e-mail et téléphone obligatoires'},{status:400});
@@ -9,6 +19,13 @@ export async function onRequestPost({request,env}){
  let c=await env.DB.prepare('SELECT id FROM clients WHERE lower(email)=lower(?) LIMIT 1').bind(email).first(); let id;
  if(c){id=c.id;await env.DB.prepare("UPDATE clients SET name=?,type=?,company=CASE WHEN ?<>'' THEN ? ELSE company END,phone=?,siret=CASE WHEN ?<>'' THEN ? ELSE siret END,status=CASE WHEN status IN ('ancien','archive') THEN 'prospect' ELSE status END,source=CASE WHEN source IS NULL OR source='manuel' THEN 'site-contact' ELSE source END,updated_at=CURRENT_TIMESTAMP WHERE id=?").bind(name,type,company,company,phone,siret,siret,id).run()}
  else {const r=await env.DB.prepare("INSERT INTO clients(type,name,company,email,phone,siret,status,source,updated_at) VALUES(?,?,?,?,?,?,'prospect','site-contact',CURRENT_TIMESTAMP)").bind(type,name,company,email,phone,siret).run();id=r.meta.last_row_id}
- await env.DB.prepare('INSERT INTO contact_requests(client_id,request_type,offer,subject,message,availability,preferred_contact) VALUES(?,?,?,?,?,?,?)').bind(id,b.demande||'',b.offre||'',b.sujet||'',b.message||'',b.disponibilites||'',b.premier_contact||'').run();
- return Response.json({ok:true});
+ const ins=await env.DB.prepare('INSERT INTO contact_requests(client_id,request_type,offer,subject,message,availability,preferred_contact) VALUES(?,?,?,?,?,?,?)').bind(id,b.demande||'',b.offre||'',b.sujet||'',b.message||'',b.disponibilites||'',b.premier_contact||'').run(); const reqId=ins.meta.last_row_id;
+ const reqLabel=labelRequest(b.demande), pref=labelContact(b.premier_contact), offer=String(b.offre||'').trim(), subject=String(b.sujet||'').trim(), msg=String(b.message||'').trim(), avail=String(b.disponibilites||'').trim();
+ const recap=`<div style="background:#faf7f1;border-radius:12px;padding:18px;line-height:1.7"><b>Type de demande :</b> ${esc(reqLabel)}<br>${offer?`<b>Offre :</b> ${esc(offer)}<br>`:''}${subject?`<b>Sujet :</b> ${esc(subject)}<br>`:''}${msg?`<b>Votre message :</b><br>${esc(msg).replace(/\n/g,'<br>')}<br>`:''}${avail?`<b>Disponibilités :</b> ${esc(avail)}<br>`:''}<b>Préférence de contact :</b> ${esc(pref)}</div>`;
+ const clientHtml=shell(`<p>Bonjour ${esc(name)},</p><p>Votre demande a bien été transmise à <b>Laur’Appui</b>.</p><h2 style="font-family:Georgia,serif">Récapitulatif de votre demande</h2>${recap}<p style="margin-top:22px"><b>Je reviendrai vers vous sous 48 heures ouvrées</b> afin d’échanger sur votre demande et vos besoins.</p>`);
+ const adminHtml=shell(`<h2 style="font-family:Georgia,serif">Nouvelle demande depuis le site</h2><p><b>${esc(name)}</b> — ${esc(type)}${company?` — ${esc(company)}`:''}</p><p>E-mail : ${esc(email)}<br>Téléphone : ${esc(phone)}${siret?`<br>SIRET : ${esc(siret)}`:''}</p>${recap}`);
+ const adminTo=env.ADMIN_NOTIFY_EMAIL||'laurappui53.pro@gmail.com';
+ const [a,cl]=await Promise.all([sendEmail(env,{to:adminTo,subject:`Nouvelle demande Laur’Appui — ${reqLabel}`,html:adminHtml,replyTo:email}),sendEmail(env,{to:email,subject:'Confirmation de votre demande — Laur’Appui',html:clientHtml,replyTo:adminTo})]);
+ await env.DB.prepare('UPDATE contact_requests SET admin_email_status=?,client_email_status=? WHERE id=?').bind(a.status,cl.status,reqId).run();
+ return Response.json({ok:true,emailConfigured:!!env.RESEND_API_KEY});
 }
