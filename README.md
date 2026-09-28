@@ -145,3 +145,10 @@ Ajout du tableau de bord privé `admin-paiements.html` et des API admin sécuris
 
 ## V5.49 — Bureau Laur’Appui
 Nouvelle page privée `admin-bureau.html` : tableau de bord, clients, devis/factures, paiements et échéances. Les nouvelles tables D1 sont dans `schema.sql`. Rejouer le schéma sur la base D1 avant utilisation.
+
+
+## V5 — Suivi Abby
+- Les factures officielles ne sont plus générées dans le Bureau Laur’Appui.
+- Le Bureau conserve les devis et permet d’enregistrer le numéro, montant, dates, statut et mode de paiement d’une facture créée dans Abby.
+- La table `abby_invoices` est créée automatiquement lors du premier accès à la rubrique Devis & suivi Abby.
+- Stripe reste séparé pour les encaissements et échéanciers.

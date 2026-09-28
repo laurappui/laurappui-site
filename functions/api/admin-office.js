@@ -14,7 +14,13 @@ export async function onRequestGet({request,env}){
   return Response.json({ok:true,metrics:{clients:c.n,documents:d.n,tasks:t.n,payments:p.n,paid:d.paid,stripe:p.cents},recent:recent.results||[]});
  }
  if(section==='clients'){const r=await env.DB.prepare('SELECT * FROM clients ORDER BY id DESC').all();return Response.json({ok:true,items:r.results||[]})}
- if(section==='documents'){const r=await env.DB.prepare("SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id ORDER BY d.id DESC").all();return Response.json({ok:true,items:r.results||[]})}
+ if(section==='documents'){
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
+  const [r,a]=await Promise.all([
+   env.DB.prepare("SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id WHERE d.kind='devis' ORDER BY d.id DESC").all(),
+   env.DB.prepare("SELECT a.*,c.name client_name FROM abby_invoices a LEFT JOIN clients c ON c.id=a.client_id ORDER BY a.id DESC").all()
+  ]);return Response.json({ok:true,items:r.results||[],abby:a.results||[]})}
+
  if(section==='tasks'){const r=await env.DB.prepare("SELECT t.*,c.name client_name FROM tasks t LEFT JOIN clients c ON c.id=t.client_id ORDER BY CASE WHEN due_date IS NULL THEN 1 ELSE 0 END,due_date,id DESC").all();return Response.json({ok:true,items:r.results||[]})}
  return bad('Section inconnue');
 }
@@ -26,10 +32,16 @@ export async function onRequestPost({request,env}){
   const r=await env.DB.prepare('INSERT INTO clients(type,name,company,email,phone,address,notes) VALUES(?,?,?,?,?,?,?)').bind(b.type||'particulier',b.name.trim(),b.company||'',b.email||'',b.phone||'',b.address||'',b.notes||'').run(); return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='document.create'){
-  if(!['devis','facture'].includes(b.kind))return bad('Type invalide');
+  if(b.kind!=='devis')return bad('Les factures officielles doivent être créées dans Abby.');
   const prefix=b.kind==='devis'?'DEV':'FAC', year=new Date().getFullYear();
   const row=await env.DB.prepare('SELECT COALESCE(MAX(id),0)+1 n FROM documents').first(); const number=`${prefix}-${year}-${String(row.n).padStart(4,'0')}`;
   const r=await env.DB.prepare('INSERT INTO documents(kind,number,client_id,label,amount_cents,status,due_date,notes) VALUES(?,?,?,?,?,?,?,?)').bind(b.kind,number,b.client_id||null,b.label||'Prestation Laur’Appui',Math.round(Number(b.amount||0)*100),b.status||'brouillon',b.due_date||null,b.notes||'').run(); return Response.json({ok:true,id:r.meta.last_row_id,number});
+ }
+ if(b.action==='abby.invoice.create'){
+  if(!String(b.abby_number||'').trim())return bad('Numéro de facture Abby obligatoire');
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
+  const r=await env.DB.prepare('INSERT INTO abby_invoices(client_id,abby_number,label,amount_cents,status,issue_date,due_date,payment_method,abby_url,notes) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(b.client_id||null,b.abby_number.trim(),b.label||'Prestation Laur’Appui',Math.round(Number(b.amount||0)*100),b.status||'envoyee',b.issue_date||null,b.due_date||null,b.payment_method||'',b.abby_url||'',b.notes||'').run();
+  return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='task.create'){
   if(!String(b.title||'').trim())return bad('Titre obligatoire'); const r=await env.DB.prepare('INSERT INTO tasks(client_id,title,due_date,priority) VALUES(?,?,?,?)').bind(b.client_id||null,b.title.trim(),b.due_date||null,b.priority||'normale').run();return Response.json({ok:true,id:r.meta.last_row_id});
