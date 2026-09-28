@@ -33,3 +33,11 @@ Le justificatif de paiement ne remplace pas automatiquement toutes les obligatio
   - `ADMIN_SESSION_SECRET` : longue chaîne aléatoire servant à signer les sessions.
 - Le tableau est marqué `noindex,nofollow` et n'est ajouté ni au menu public ni au sitemap.
 - Avant activation réelle, compléter les mentions légales/SIRET et tester Stripe en mode Test.
+
+
+## Préparation sans compte Stripe — V3
+- Le Bureau affiche désormais un état `En attente de configuration` tant que `STRIPE_WEBHOOK_SECRET` n’existe pas.
+- Aucun faux secret ou lien Stripe n’est inclus.
+- Les quatre offres prévues sont affichées dans le Bureau avec leurs montants.
+- L’état passera automatiquement à `Stripe connecté` lorsque le secret webhook sera configuré.
+- Endpoint privé ajouté : `/api/stripe-status` (ne révèle jamais la valeur des secrets).
