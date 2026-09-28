@@ -141,3 +141,7 @@ Voir `AUTOMATISATION-PAIEMENTS.md`. Les fonctions sont inactives tant que D1 et 
 
 ## V5.48
 Ajout du tableau de bord privé `admin-paiements.html` et des API admin sécurisées pour consulter/rechercher/exporter les paiements et ouvrir les justificatifs. Voir `AUTOMATISATION-PAIEMENTS.md`.
+
+
+## V5.49 — Bureau Laur’Appui
+Nouvelle page privée `admin-bureau.html` : tableau de bord, clients, devis/factures, paiements et échéances. Les nouvelles tables D1 sont dans `schema.sql`. Rejouer le schéma sur la base D1 avant utilisation.
