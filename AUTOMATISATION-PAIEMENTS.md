@@ -23,3 +23,13 @@ La génération du justificatif est préparée, mais l’envoi automatique par e
 
 ## Important
 Le justificatif de paiement ne remplace pas automatiquement toutes les obligations d’une facture. La version définitive sera ajustée avec SIREN/SIRET, adresse, régime de TVA et autres mentions applicables avant mise en production.
+
+## V5.48 — Tableau de bord privé Laura
+- Page : `/admin-paiements.html`
+- Connexion par mot de passe avec cookie de session HttpOnly/Secure (8 h).
+- Liste des paiements D1, recherche client/e-mail/prestation, total encaissé, ouverture du justificatif et export CSV.
+- Secrets Cloudflare supplémentaires à créer :
+  - `ADMIN_PASSWORD` : mot de passe privé choisi par Laura (ne jamais l'écrire dans GitHub).
+  - `ADMIN_SESSION_SECRET` : longue chaîne aléatoire servant à signer les sessions.
+- Le tableau est marqué `noindex,nofollow` et n'est ajouté ni au menu public ni au sitemap.
+- Avant activation réelle, compléter les mentions légales/SIRET et tester Stripe en mode Test.

@@ -137,3 +137,7 @@ Dossier Serein et Besoin ponctuel restent hors paiement direct.
 
 ## V5.47 — préparation automatisation paiements
 Voir `AUTOMATISATION-PAIEMENTS.md`. Les fonctions sont inactives tant que D1 et le secret Stripe ne sont pas configurés.
+
+
+## V5.48
+Ajout du tableau de bord privé `admin-paiements.html` et des API admin sécurisées pour consulter/rechercher/exporter les paiements et ouvrir les justificatifs. Voir `AUTOMATISATION-PAIEMENTS.md`.
