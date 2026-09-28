@@ -36,7 +36,9 @@ export async function onRequestPost({request,env}){
   const type=b.type==='professionnel'?'professionnel':'particulier';
   if(type==='professionnel'&&!String(b.company||'').trim())return bad('Raison sociale obligatoire pour un professionnel');
   const siret=String(b.siret||'').replace(/\s/g,'');
-  if(type==='professionnel'&&!/^\d{14}$/.test(siret))return bad('SIRET professionnel : 14 chiffres obligatoires');
+  if(siret&&!/^\d{14}$/.test(siret))return bad('SIRET : renseignez 14 chiffres ou laissez le champ vide');
+  if(!String(b.email||'').trim())return bad('E-mail obligatoire');
+  if(!String(b.phone||'').trim())return bad('Téléphone obligatoire');
   const r=await env.DB.prepare('INSERT INTO clients(type,name,company,email,phone,address,notes,siret,vat_number,postal_code,city,country) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)').bind(type,b.name.trim(),type==='professionnel'?(b.company||'').trim():'',b.email||'',b.phone||'',b.address||'',b.notes||'',type==='professionnel'?siret:'',type==='professionnel'?(b.vat_number||'').trim():'',b.postal_code||'',b.city||'',b.country||'France').run(); return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='document.create'){
@@ -56,7 +58,14 @@ export async function onRequestPost({request,env}){
   if(!String(b.title||'').trim())return bad('Titre obligatoire'); const r=await env.DB.prepare('INSERT INTO tasks(client_id,title,due_date,priority) VALUES(?,?,?,?)').bind(b.client_id||null,b.title.trim(),b.due_date||null,b.priority||'normale').run();return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='status'){
-  const tables={client:'clients',document:'documents',task:'tasks'};const table=tables[b.entity];if(!table)return bad('Entité invalide'); await env.DB.prepare(`UPDATE ${table} SET status=? WHERE id=?`).bind(b.status,b.id).run();return Response.json({ok:true});
+  const tables={client:'clients',document:'documents',task:'tasks'};const table=tables[b.entity];if(!table)return bad('Entité invalide');
+  if(b.entity==='document'&&b.status==='a-facturer-abby'){
+   await ensureClientColumns(env);
+   const row=await env.DB.prepare('SELECT c.type,c.siret,c.company FROM documents d LEFT JOIN clients c ON c.id=d.client_id WHERE d.id=?').bind(b.id).first();
+   if(!row)return bad('Devis introuvable');
+   if(row.type==='professionnel'&&!/^\d{14}$/.test(String(row.siret||'').replace(/\s/g,'')))return bad('SIRET du client professionnel à compléter avant facturation Abby');
+  }
+  await env.DB.prepare(`UPDATE ${table} SET status=? WHERE id=?`).bind(b.status,b.id).run();return Response.json({ok:true});
  }
  return bad('Action inconnue');
 }

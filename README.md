@@ -172,3 +172,10 @@ Nouvelle page privée `admin-bureau.html` : tableau de bord, clients, devis/fact
 - Le bouton `Clients > + Nouveau` ouvre directement une fenêtre dédiée de création client.
 - Le formulaire force explicitement l'action `client.create` pour éviter toute dépendance à la rubrique active.
 - Après enregistrement, la liste Clients est rechargée depuis D1 et le client devient disponible dans `Devis & suivi Abby`.
+
+
+## V10 — Prospects / SIRET / contact public
+- SIRET professionnel facultatif à la création d’un prospect/client.
+- Contrôle du SIRET (14 chiffres) uniquement avant passage d’un devis professionnel à « À facturer Abby ».
+- E-mail et téléphone obligatoires dans la fiche client interne.
+- Formulaire public : Entreprise + SIRET facultatif apparaissent uniquement si « Professionnel » est sélectionné.
