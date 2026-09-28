@@ -6,5 +6,5 @@ export async function onRequestPost({request,env}){
   let body={}; try{body=await request.json()}catch{}
   if(String(body.password||'')!==String(env.ADMIN_PASSWORD)) return Response.json({ok:false,error:'Mot de passe incorrect'},{status:401});
   const exp=Math.floor(Date.now()/1000)+8*3600, payload=`admin.${exp}`, sig=await hmac(payload,env.ADMIN_SESSION_SECRET);
-  return new Response(JSON.stringify({ok:true}),{headers:{'content-type':'application/json','set-cookie':`laurappui_admin=${payload}.${sig}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=28800`}});
+  return new Response(JSON.stringify({ok:true}),{headers:{'content-type':'application/json','set-cookie':`laurappui_admin=${payload}.${sig}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=28800`}});
 }
