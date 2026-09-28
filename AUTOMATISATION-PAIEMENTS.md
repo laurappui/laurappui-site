@@ -41,3 +41,13 @@ Le justificatif de paiement ne remplace pas automatiquement toutes les obligatio
 - Les quatre offres prévues sont affichées dans le Bureau avec leurs montants.
 - L’état passera automatiquement à `Stripe connecté` lorsque le secret webhook sera configuré.
 - Endpoint privé ajouté : `/api/stripe-status` (ne révèle jamais la valeur des secrets).
+
+
+## Préparation V4 — échéanciers Stripe
+- Diagnostic Budget 90 € : comptant / 3 × 30 € / 4 × 22,50 €.
+- Sérénité Budget 180 € : comptant / 3 × 60 € / 4 × 45 €.
+- VIP Trimestriel 360 € : comptant / 3 × 120 € / 4 × 90 €.
+- VIP Annuel 1 100 € : comptant / 3 fois / 4 × 275 € / 12 fois.
+- 12 fois annuel : 11 × 91,67 € puis 1 × 91,63 € = 1 100,00 €.
+- Les clés/liens Stripe restent volontairement vides tant que le compte n’est pas activé.
+- Le 12× est préparé comme échéancier récurrent à durée déterminée, pas comme un crédit garanti au client.
