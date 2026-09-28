@@ -160,3 +160,10 @@ Nouvelle page privée `admin-bureau.html` : tableau de bord, clients, devis/fact
 - Nouveau formulaire devis : client, prestation, montant, paiement prévu, date, validité, statut et notes.
 - Workflow devis : brouillon → accepté/refusé → à facturer dans Abby.
 - Factures officielles toujours créées dans Abby.
+
+
+## V7 — Clients → Devis
+- Le formulaire de devis recharge toujours la liste réelle des clients depuis D1.
+- Le cache est désactivé sur l'API du Bureau pour éviter une liste obsolète.
+- Les libellés distinguent Particulier et Professionnel et affichent l'entreprise lorsqu'elle existe.
+- Si aucun client n'est enregistré, le formulaire l'indique explicitement.
