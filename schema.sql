@@ -7,7 +7,7 @@ CREATE INDEX IF NOT EXISTS idx_payments_receipt_token ON payments(receipt_token)
 
 CREATE TABLE IF NOT EXISTS clients (
  id INTEGER PRIMARY KEY AUTOINCREMENT, type TEXT NOT NULL DEFAULT 'particulier', name TEXT NOT NULL, company TEXT,
- email TEXT, phone TEXT, address TEXT, notes TEXT, status TEXT NOT NULL DEFAULT 'actif', created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+ email TEXT, phone TEXT, address TEXT, postal_code TEXT, city TEXT, country TEXT DEFAULT 'France', siret TEXT, vat_number TEXT, notes TEXT, status TEXT NOT NULL DEFAULT 'actif', created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE TABLE IF NOT EXISTS documents (
  id INTEGER PRIMARY KEY AUTOINCREMENT, kind TEXT NOT NULL, number TEXT NOT NULL UNIQUE, client_id INTEGER,

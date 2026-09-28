@@ -1,5 +1,6 @@
 import {isAdmin} from './_admin-auth.js';
 const bad=(e,s=400)=>Response.json({ok:false,error:e},{status:s});
+async function ensureClientColumns(env){for(const sql of ["ALTER TABLE clients ADD COLUMN siret TEXT","ALTER TABLE clients ADD COLUMN vat_number TEXT","ALTER TABLE clients ADD COLUMN postal_code TEXT","ALTER TABLE clients ADD COLUMN city TEXT","ALTER TABLE clients ADD COLUMN country TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}}
 async function ensureDocColumns(env){for(const sql of ["ALTER TABLE documents ADD COLUMN payment_plan TEXT","ALTER TABLE documents ADD COLUMN quote_date TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}}
 async function auth(request,env){return await isAdmin(request,env)}
 export async function onRequestGet({request,env}){
@@ -14,7 +15,7 @@ export async function onRequestGet({request,env}){
   const recent=await env.DB.prepare("SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id ORDER BY d.id DESC LIMIT 8").all();
   return Response.json({ok:true,metrics:{clients:c.n,documents:d.n,tasks:t.n,payments:p.n,paid:d.paid,stripe:p.cents},recent:recent.results||[]});
  }
- if(section==='clients'){const r=await env.DB.prepare('SELECT * FROM clients ORDER BY id DESC').all();return Response.json({ok:true,items:r.results||[]})}
+ if(section==='clients'){await ensureClientColumns(env);const r=await env.DB.prepare('SELECT * FROM clients ORDER BY id DESC').all();return Response.json({ok:true,items:r.results||[]})}
  if(section==='documents'){
   await ensureDocColumns(env);
   await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
@@ -31,7 +32,12 @@ export async function onRequestPost({request,env}){
  const b=await request.json().catch(()=>null); if(!b)return bad('Données invalides');
  if(b.action==='client.create'){
   if(!String(b.name||'').trim())return bad('Nom obligatoire');
-  const r=await env.DB.prepare('INSERT INTO clients(type,name,company,email,phone,address,notes) VALUES(?,?,?,?,?,?,?)').bind(b.type||'particulier',b.name.trim(),b.company||'',b.email||'',b.phone||'',b.address||'',b.notes||'').run(); return Response.json({ok:true,id:r.meta.last_row_id});
+  await ensureClientColumns(env);
+  const type=b.type==='professionnel'?'professionnel':'particulier';
+  if(type==='professionnel'&&!String(b.company||'').trim())return bad('Raison sociale obligatoire pour un professionnel');
+  const siret=String(b.siret||'').replace(/\s/g,'');
+  if(type==='professionnel'&&!/^\d{14}$/.test(siret))return bad('SIRET professionnel : 14 chiffres obligatoires');
+  const r=await env.DB.prepare('INSERT INTO clients(type,name,company,email,phone,address,notes,siret,vat_number,postal_code,city,country) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)').bind(type,b.name.trim(),type==='professionnel'?(b.company||'').trim():'',b.email||'',b.phone||'',b.address||'',b.notes||'',type==='professionnel'?siret:'',type==='professionnel'?(b.vat_number||'').trim():'',b.postal_code||'',b.city||'',b.country||'France').run(); return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='document.create'){
   await ensureDocColumns(env);
