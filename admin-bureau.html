@@ -45,7 +45,7 @@ function openClientModal(){
  toggleClientFields();
 }
 function editClient(id){const c=clients.find(x=>Number(x.id)===Number(id));if(!c)return;$('#modalTitle').textContent='Modifier la fiche';$('#form').innerHTML=clientFormHtml(c);$('#modal').classList.remove('hidden');toggleClientFields()}
-window.editClient=editClient;window.cycleClientStatus=cycleClientStatus;window.deleteClient=deleteClient;
+window.editClient=editClient;window.setClientStatus=setClientStatus;window.viewClient=viewClient;window.deleteClient=deleteClient;
 async function openNew(){
  if(page==='clients'){openClientModal();return}
  if(page!=='clients'){
