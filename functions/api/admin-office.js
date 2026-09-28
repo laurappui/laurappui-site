@@ -1,5 +1,6 @@
 import {isAdmin} from './_admin-auth.js';
 const bad=(e,s=400)=>Response.json({ok:false,error:e},{status:s});
+async function ensureDocColumns(env){for(const sql of ["ALTER TABLE documents ADD COLUMN payment_plan TEXT","ALTER TABLE documents ADD COLUMN quote_date TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}}
 async function auth(request,env){return await isAdmin(request,env)}
 export async function onRequestGet({request,env}){
  if(!await auth(request,env)) return bad('Non autorisé',401); if(!env.DB)return bad('Base D1 non configurée',503);
@@ -15,6 +16,7 @@ export async function onRequestGet({request,env}){
  }
  if(section==='clients'){const r=await env.DB.prepare('SELECT * FROM clients ORDER BY id DESC').all();return Response.json({ok:true,items:r.results||[]})}
  if(section==='documents'){
+  await ensureDocColumns(env);
   await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
   const [r,a]=await Promise.all([
    env.DB.prepare("SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id WHERE d.kind='devis' ORDER BY d.id DESC").all(),
@@ -32,10 +34,11 @@ export async function onRequestPost({request,env}){
   const r=await env.DB.prepare('INSERT INTO clients(type,name,company,email,phone,address,notes) VALUES(?,?,?,?,?,?,?)').bind(b.type||'particulier',b.name.trim(),b.company||'',b.email||'',b.phone||'',b.address||'',b.notes||'').run(); return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='document.create'){
+  await ensureDocColumns(env);
   if(b.kind!=='devis')return bad('Les factures officielles doivent être créées dans Abby.');
   const prefix=b.kind==='devis'?'DEV':'FAC', year=new Date().getFullYear();
   const row=await env.DB.prepare('SELECT COALESCE(MAX(id),0)+1 n FROM documents').first(); const number=`${prefix}-${year}-${String(row.n).padStart(4,'0')}`;
-  const r=await env.DB.prepare('INSERT INTO documents(kind,number,client_id,label,amount_cents,status,due_date,notes) VALUES(?,?,?,?,?,?,?,?)').bind(b.kind,number,b.client_id||null,b.label||'Prestation Laur’Appui',Math.round(Number(b.amount||0)*100),b.status||'brouillon',b.due_date||null,b.notes||'').run(); return Response.json({ok:true,id:r.meta.last_row_id,number});
+  const r=await env.DB.prepare('INSERT INTO documents(kind,number,client_id,label,amount_cents,status,due_date,notes,payment_plan,quote_date) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(b.kind,number,b.client_id||null,b.label||'Prestation Laur’Appui',Math.round(Number(b.amount||0)*100),b.status||'brouillon',b.due_date||null,b.notes||'',b.payment_plan||'comptant',b.quote_date||null).run(); return Response.json({ok:true,id:r.meta.last_row_id,number});
  }
  if(b.action==='abby.invoice.create'){
   if(!String(b.abby_number||'').trim())return bad('Numéro de facture Abby obligatoire');

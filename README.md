@@ -152,3 +152,11 @@ Nouvelle page privée `admin-bureau.html` : tableau de bord, clients, devis/fact
 - Le Bureau conserve les devis et permet d’enregistrer le numéro, montant, dates, statut et mode de paiement d’une facture créée dans Abby.
 - La table `abby_invoices` est créée automatiquement lors du premier accès à la rubrique Devis & suivi Abby.
 - Stripe reste séparé pour les encaissements et échéanciers.
+
+
+## V6 — Navigation et workflow Abby
+- Correction de la navigation asynchrone : chaque rubrique conserve son propre contenu, même après un changement rapide de page.
+- URL interne par rubrique (#dashboard, #clients, #documents, #payments, #tasks).
+- Nouveau formulaire devis : client, prestation, montant, paiement prévu, date, validité, statut et notes.
+- Workflow devis : brouillon → accepté/refusé → à facturer dans Abby.
+- Factures officielles toujours créées dans Abby.
