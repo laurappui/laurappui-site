@@ -186,3 +186,5 @@ Nouvelle page privée `admin-bureau.html` : tableau de bord, clients, devis/fact
 - Modification et suppression sécurisée des fiches.
 - Demandes du formulaire public enregistrées automatiquement comme prospects D1.
 - Paiements Stripe : création automatique de la fiche si l'e-mail n'existe pas, sinon rattachement et passage en client actif.
+
+V13 CRM : demandes site par client, historique des échanges, recherche, filtres et tri clients.

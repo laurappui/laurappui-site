@@ -1,6 +1,10 @@
 import {isAdmin} from './_admin-auth.js';
 const bad=(e,s=400)=>Response.json({ok:false,error:e},{status:s});
 async function ensureClientColumns(env){for(const sql of ["ALTER TABLE clients ADD COLUMN siret TEXT","ALTER TABLE clients ADD COLUMN vat_number TEXT","ALTER TABLE clients ADD COLUMN postal_code TEXT","ALTER TABLE clients ADD COLUMN city TEXT","ALTER TABLE clients ADD COLUMN country TEXT","ALTER TABLE clients ADD COLUMN source TEXT DEFAULT 'manuel'","ALTER TABLE clients ADD COLUMN updated_at TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}}
+async function ensureCrmTables(env){
+ await env.DB.prepare(`CREATE TABLE IF NOT EXISTS contact_requests (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, request_type TEXT, offer TEXT, subject TEXT, message TEXT, availability TEXT, preferred_contact TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)`).run();
+ await env.DB.prepare(`CREATE TABLE IF NOT EXISTS client_exchanges (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER NOT NULL, exchange_type TEXT NOT NULL, summary TEXT NOT NULL, next_action TEXT, exchange_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
+}
 async function ensureDocColumns(env){for(const sql of ["ALTER TABLE documents ADD COLUMN payment_plan TEXT","ALTER TABLE documents ADD COLUMN quote_date TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}}
 async function auth(request,env){return await isAdmin(request,env)}
 export async function onRequestGet({request,env}){
@@ -20,13 +24,16 @@ export async function onRequestGet({request,env}){
   await ensureClientColumns(env); const id=Number(u.searchParams.get('id')); if(!id)return bad('Client invalide');
   const client=await env.DB.prepare('SELECT * FROM clients WHERE id=?').bind(id).first(); if(!client)return bad('Client introuvable',404);
   await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
-  const [documents,abby,tasks,payments]=await Promise.all([
+  await ensureCrmTables(env);
+  const [documents,abby,tasks,payments,requests,exchanges]=await Promise.all([
    env.DB.prepare('SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id WHERE d.client_id=? ORDER BY d.id DESC').bind(id).all(),
    env.DB.prepare('SELECT * FROM abby_invoices WHERE client_id=? ORDER BY id DESC').bind(id).all(),
    env.DB.prepare('SELECT * FROM tasks WHERE client_id=? ORDER BY id DESC').bind(id).all(),
-   env.DB.prepare('SELECT * FROM payments WHERE lower(customer_email)=lower(?) ORDER BY datetime(paid_at) DESC').bind(client.email||'').all()
+   env.DB.prepare('SELECT * FROM payments WHERE lower(customer_email)=lower(?) ORDER BY datetime(paid_at) DESC').bind(client.email||'').all(),
+   env.DB.prepare('SELECT * FROM contact_requests WHERE client_id=? ORDER BY datetime(created_at) DESC,id DESC').bind(id).all(),
+   env.DB.prepare('SELECT * FROM client_exchanges WHERE client_id=? ORDER BY datetime(exchange_at) DESC,id DESC').bind(id).all()
   ]);
-  return Response.json({ok:true,client,documents:documents.results||[],abby:abby.results||[],tasks:tasks.results||[],payments:payments.results||[]});
+  return Response.json({ok:true,client,documents:documents.results||[],abby:abby.results||[],tasks:tasks.results||[],payments:payments.results||[],requests:requests.results||[],exchanges:exchanges.results||[]});
  }
  if(section==='documents'){
   await ensureDocColumns(env);
@@ -65,6 +72,13 @@ export async function onRequestPost({request,env}){
   const id=Number(b.id); if(!id)return bad('Client invalide'); const c=await env.DB.prepare('SELECT email FROM clients WHERE id=?').bind(id).first(); if(!c)return bad('Client introuvable');
   const [d,t,ai,pay]=await Promise.all([env.DB.prepare('SELECT COUNT(*) n FROM documents WHERE client_id=?').bind(id).first(),env.DB.prepare('SELECT COUNT(*) n FROM tasks WHERE client_id=?').bind(id).first(),env.DB.prepare('SELECT COUNT(*) n FROM abby_invoices WHERE client_id=?').bind(id).first(),env.DB.prepare('SELECT COUNT(*) n FROM payments WHERE lower(customer_email)=lower(?)').bind(c.email||'').first()]);
   if((d?.n||0)+(t?.n||0)+(ai?.n||0)+(pay?.n||0)>0)return bad('Cette fiche possède un historique. Passez-la en « Archivé » au lieu de la supprimer.'); await env.DB.prepare('DELETE FROM clients WHERE id=?').bind(id).run(); return Response.json({ok:true});
+ }
+ if(b.action==='exchange.create'){
+  await ensureCrmTables(env); const id=Number(b.client_id); if(!id)return bad('Client invalide');
+  const type=String(b.exchange_type||'note').trim(), summary=String(b.summary||'').trim(); if(!summary)return bad('Résumé de l’échange obligatoire');
+  const at=String(b.exchange_at||'').trim()||new Date().toISOString();
+  const r=await env.DB.prepare('INSERT INTO client_exchanges(client_id,exchange_type,summary,next_action,exchange_at) VALUES(?,?,?,?,?)').bind(id,type,summary,String(b.next_action||'').trim(),at).run();
+  await env.DB.prepare('UPDATE clients SET updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(id).run(); return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='document.create'){
   await ensureDocColumns(env);
