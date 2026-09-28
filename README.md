@@ -133,3 +133,7 @@ Dossier Serein et Besoin ponctuel restent hors paiement direct.
 - Acceptation des CGV avant les boutons de paiement en ligne.
 - Amélioration de la lisibilité mobile de la Politique de confidentialité.
 - À compléter avant mise en production B2C : identité légale complète et médiateur de la consommation effectivement désigné.
+
+
+## V5.47 — préparation automatisation paiements
+Voir `AUTOMATISATION-PAIEMENTS.md`. Les fonctions sont inactives tant que D1 et le secret Stripe ne sont pas configurés.
