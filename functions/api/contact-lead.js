@@ -7,7 +7,7 @@ async function ensure(env){
 }
 async function sendEmail(env,{to,subject,html,replyTo}){
  if(!env.RESEND_API_KEY)return {ok:false,status:'non-configure'};
- const from=env.EMAIL_FROM||'Laur’Appui <onboarding@resend.dev>';
+ const from=env.EMAIL_FROM||'Laur’Appui <contact@laurappui.fr>';
  const r=await fetch('https://api.resend.com/emails',{method:'POST',headers:{'content-type':'application/json','authorization':`Bearer ${env.RESEND_API_KEY}`},body:JSON.stringify({from,to:[to],subject,html,reply_to:replyTo||undefined})});
  if(!r.ok)return {ok:false,status:'echec'}; return {ok:true,status:'envoye'};
 }
