@@ -1,0 +1,14 @@
+LAUR’APPUI — V16 MÉDIATION & JURIDIQUE
+
+Mise à jour du 4 octobre 2026
+- Médiateur désigné : Société Médiation Professionnelle
+- Adresse : Alteritae, 5 rue Salvaing, 12000 Rodez
+- Site : https://www.mediateur-consommation-smp.fr
+- CGV : clause de médiation finalisée
+- Mentions légales : médiation + TVA + hébergeur Cloudflare complétés
+- Footer public : accès direct à la médiation ajouté
+- TVA : mention « TVA non applicable — art. 293 B du CGI »
+- SIREN/SIRET et identité déjà présents dans la V15 conservés
+- CRM, formulaires, e-mails Resend, D1 et préparation Stripe conservés
+
+IMPORTANT : les coordonnées bancaires ne sont pas publiées sur les pages publiques.
