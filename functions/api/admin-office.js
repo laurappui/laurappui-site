@@ -130,6 +130,26 @@ export async function onRequestPost({request,env}){
   const row=await env.DB.prepare('SELECT COALESCE(MAX(id),0)+1 n FROM documents').first(); const number=`${prefix}-${year}-${String(row.n).padStart(4,'0')}`;
   const r=await env.DB.prepare('INSERT INTO documents(kind,number,client_id,label,amount_cents,status,due_date,notes,payment_plan,quote_date) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(b.kind,number,b.client_id||null,b.label||'Prestation Laur’Appui',Math.round(Number(b.amount||0)*100),b.status||'brouillon',b.due_date||null,b.notes||'',b.payment_plan||'comptant',b.quote_date||null).run(); return Response.json({ok:true,id:r.meta.last_row_id,number});
  }
+ if(b.action==='document.update'){
+  await ensureDocColumns(env);
+  const id=Number(b.id); if(!id)return bad('Devis invalide');
+  const doc=await env.DB.prepare("SELECT * FROM documents WHERE id=? AND kind='devis'").bind(id).first(); if(!doc)return bad('Devis introuvable');
+  if(doc.status==='facture')return bad('Ce devis est lié à une facture Abby. Modifiez le suivi avec prudence : le devis ne peut plus être modifié directement.');
+  const clientId=Number(b.client_id||0); if(!clientId)return bad('Client obligatoire');
+  const label=String(b.label||'').trim(); if(!label)return bad('Prestation obligatoire');
+  const amount=Math.round(Number(b.amount||0)*100); if(!Number.isFinite(amount)||amount<0)return bad('Montant invalide');
+  await env.DB.prepare('UPDATE documents SET client_id=?,label=?,amount_cents=?,due_date=?,notes=?,payment_plan=?,quote_date=? WHERE id=? AND kind=\'devis\'').bind(clientId,label,amount,b.due_date||null,b.notes||'',b.payment_plan||'comptant',b.quote_date||null,id).run();
+  return Response.json({ok:true});
+ }
+ if(b.action==='document.delete'){
+  const id=Number(b.id); if(!id)return bad('Devis invalide');
+  const doc=await env.DB.prepare("SELECT * FROM documents WHERE id=? AND kind='devis'").bind(id).first(); if(!doc)return bad('Devis introuvable');
+  if(doc.status==='facture')return bad('Suppression impossible : ce devis est déjà lié à une facture Abby.');
+  const linked=await env.DB.prepare("SELECT COUNT(*) n FROM abby_invoices WHERE notes LIKE ?").bind('%'+String(doc.number||'')+'%').first();
+  if(linked?.n)return bad('Suppression impossible : une facture Abby semble liée à ce devis.');
+  await env.DB.prepare("DELETE FROM documents WHERE id=? AND kind='devis'").bind(id).run();
+  return Response.json({ok:true});
+ }
  if(b.action==='abby.invoice.create'){
   if(!String(b.abby_number||'').trim())return bad('Numéro de facture Abby obligatoire');
   await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
