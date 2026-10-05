@@ -44,19 +44,20 @@ export async function onRequestGet({request,env}){
  if(section==='dashboard'){
   await ensureClientColumns(env);
   await syncAbbyDeadlines(env);
+  try{await env.DB.prepare("ALTER TABLE payments ADD COLUMN hidden_from_dashboard INTEGER DEFAULT 0").run()}catch{}
   const [active,prospects,quotes,openTasks,lateTasks,stripeMonth,stripeYear,unpaidAbby,paidAbby,recentDocs,nextTasks,recentPayments,recentAbby]=await Promise.all([
    env.DB.prepare("SELECT COUNT(*) n FROM clients WHERE status='actif'").first(),
    env.DB.prepare("SELECT COUNT(*) n FROM clients WHERE status='prospect'").first(),
    env.DB.prepare("SELECT COUNT(*) n FROM documents WHERE kind='devis' AND status IN ('brouillon','envoye','accepte','a-facturer-abby')").first(),
    env.DB.prepare("SELECT COUNT(*) n FROM tasks WHERE status!='terminee'").first(),
    env.DB.prepare("SELECT COUNT(*) n FROM tasks WHERE status!='terminee' AND due_date IS NOT NULL AND date(due_date)<date('now')").first(),
-   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_total),0) cents FROM payments WHERE strftime('%Y-%m',datetime(paid_at))=strftime('%Y-%m','now')").first(),
-   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_total),0) cents FROM payments WHERE strftime('%Y',datetime(paid_at))=strftime('%Y','now')").first(),
+   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_total),0) cents FROM payments WHERE COALESCE(hidden_from_dashboard,0)=0 AND strftime('%Y-%m',datetime(paid_at))=strftime('%Y-%m','now')").first(),
+   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_total),0) cents FROM payments WHERE COALESCE(hidden_from_dashboard,0)=0 AND strftime('%Y',datetime(paid_at))=strftime('%Y','now')").first(),
    env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_cents),0) cents FROM abby_invoices WHERE lower(COALESCE(status,'')) NOT IN ('payee','avoir')").first(),
    env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_cents),0) cents FROM abby_invoices WHERE lower(COALESCE(status,''))='payee'").first(),
    env.DB.prepare("SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id ORDER BY d.id DESC LIMIT 6").all(),
    env.DB.prepare("SELECT t.*,c.name client_name FROM tasks t LEFT JOIN clients c ON c.id=t.client_id WHERE t.status!='terminee' ORDER BY CASE WHEN t.due_date IS NULL THEN 1 ELSE 0 END,t.due_date,t.id DESC LIMIT 8").all(),
-   env.DB.prepare("SELECT id,customer_name,customer_email,offer_label,amount_total,paid_at FROM payments ORDER BY datetime(paid_at) DESC LIMIT 5").all(),
+   env.DB.prepare("SELECT id,customer_name,customer_email,offer_label,amount_total,paid_at FROM payments WHERE COALESCE(hidden_from_dashboard,0)=0 ORDER BY datetime(paid_at) DESC LIMIT 5").all(),
    env.DB.prepare("SELECT a.*,c.name client_name FROM abby_invoices a LEFT JOIN clients c ON c.id=a.client_id ORDER BY a.id DESC LIMIT 5").all()
   ]);
   return Response.json({ok:true,metrics:{clients:active?.n||0,prospects:prospects?.n||0,quotes:quotes?.n||0,tasks:openTasks?.n||0,late:lateTasks?.n||0,stripeMonth:stripeMonth?.cents||0,stripeYear:stripeYear?.cents||0,unpaidAbby:unpaidAbby?.cents||0,unpaidAbbyCount:unpaidAbby?.n||0,paidAbby:paidAbby?.cents||0},recent:recentDocs.results||[],nextTasks:nextTasks.results||[],recentPayments:recentPayments.results||[],recentAbby:recentAbby.results||[]});
@@ -135,6 +136,7 @@ export async function onRequestPost({request,env}){
   const duplicate=await env.DB.prepare('SELECT id FROM abby_invoices WHERE lower(abby_number)=lower(?) LIMIT 1').bind(b.abby_number.trim()).first();
   if(duplicate)return bad('Ce numéro de facture Abby est déjà enregistré dans le CRM.');
   const r=await env.DB.prepare('INSERT INTO abby_invoices(client_id,abby_number,label,amount_cents,status,issue_date,due_date,payment_method,abby_url,notes) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(b.client_id||null,b.abby_number.trim(),b.label||'Prestation Laur’Appui',Math.round(Number(b.amount||0)*100),b.status||'envoyee',b.issue_date||null,b.due_date||null,b.payment_method||'',b.abby_url||'',b.notes||'').run();
+  if(Number(b.client_id||0)) await env.DB.prepare("UPDATE clients SET status='actif',updated_at=CURRENT_TIMESTAMP WHERE id=? AND status='prospect'").bind(Number(b.client_id)).run();
   const quoteId=Number(b.quote_id||0); if(quoteId) await env.DB.prepare("UPDATE documents SET status='facture' WHERE id=? AND kind='devis'").bind(quoteId).run();
   return Response.json({ok:true,id:r.meta.last_row_id});
  }
@@ -163,7 +165,12 @@ export async function onRequestPost({request,env}){
   }
   if(b.entity==='document'&&!['brouillon','envoye','accepte','refuse','expire','a-facturer-abby','facture'].includes(b.status))return bad('Statut de devis invalide');
   if(b.entity==='task'&&!['a-faire','terminee'].includes(b.status))return bad('Statut d’échéance invalide');
-  await env.DB.prepare(`UPDATE ${table} SET status=? WHERE id=?`).bind(b.status,b.id).run();return Response.json({ok:true});
+  await env.DB.prepare(`UPDATE ${table} SET status=? WHERE id=?`).bind(b.status,b.id).run();
+  if(b.entity==='document'&&['accepte','a-facturer-abby','facture'].includes(b.status)){
+   const doc=await env.DB.prepare("SELECT client_id FROM documents WHERE id=? AND kind='devis'").bind(b.id).first();
+   if(doc?.client_id) await env.DB.prepare("UPDATE clients SET status='actif',updated_at=CURRENT_TIMESTAMP WHERE id=? AND status='prospect'").bind(doc.client_id).run();
+  }
+  return Response.json({ok:true});
  }
  return bad('Action inconnue');
 }
