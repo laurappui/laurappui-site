@@ -45,7 +45,7 @@ export async function onRequestGet({request,env}){
   await ensureClientColumns(env);
   await syncAbbyDeadlines(env);
   try{await env.DB.prepare("ALTER TABLE payments ADD COLUMN hidden_from_dashboard INTEGER DEFAULT 0").run()}catch{}
-  const [active,prospects,quotes,openTasks,lateTasks,stripeMonth,stripeYear,unpaidAbby,paidAbby,recentDocs,nextTasks,recentPayments,recentAbby]=await Promise.all([
+  const [active,prospects,quotes,openTasks,lateTasks,stripeMonth,stripeYear,unpaidAbby,paidAbby,paidAbbyMonth,paidAbbyYear,recentDocs,nextTasks,recentPayments,recentAbby]=await Promise.all([
    env.DB.prepare("SELECT COUNT(*) n FROM clients WHERE status='actif'").first(),
    env.DB.prepare("SELECT COUNT(*) n FROM clients WHERE status='prospect'").first(),
    env.DB.prepare("SELECT COUNT(*) n FROM documents WHERE kind='devis' AND status IN ('brouillon','envoye','accepte','a-facturer-abby')").first(),
@@ -55,12 +55,14 @@ export async function onRequestGet({request,env}){
    env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_total),0) cents FROM payments WHERE COALESCE(hidden_from_dashboard,0)=0 AND strftime('%Y',datetime(paid_at))=strftime('%Y','now')").first(),
    env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_cents),0) cents FROM abby_invoices WHERE lower(COALESCE(status,'')) NOT IN ('payee','avoir')").first(),
    env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_cents),0) cents FROM abby_invoices WHERE lower(COALESCE(status,''))='payee'").first(),
+   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(a.amount_cents),0) cents FROM abby_invoices a JOIN tasks t ON t.source='abby' AND t.source_id=a.id WHERE lower(COALESCE(a.status,''))='payee' AND t.paid_at IS NOT NULL AND strftime('%Y-%m',datetime(t.paid_at))=strftime('%Y-%m','now')").first(),
+   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(a.amount_cents),0) cents FROM abby_invoices a JOIN tasks t ON t.source='abby' AND t.source_id=a.id WHERE lower(COALESCE(a.status,''))='payee' AND t.paid_at IS NOT NULL AND strftime('%Y',datetime(t.paid_at))=strftime('%Y','now')").first(),
    env.DB.prepare("SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id ORDER BY d.id DESC LIMIT 6").all(),
    env.DB.prepare("SELECT t.*,c.name client_name FROM tasks t LEFT JOIN clients c ON c.id=t.client_id WHERE t.status!='terminee' ORDER BY CASE WHEN t.due_date IS NULL THEN 1 ELSE 0 END,t.due_date,t.id DESC LIMIT 8").all(),
    env.DB.prepare("SELECT id,customer_name,customer_email,offer_label,amount_total,paid_at FROM payments WHERE COALESCE(hidden_from_dashboard,0)=0 ORDER BY datetime(paid_at) DESC LIMIT 5").all(),
-   env.DB.prepare("SELECT a.*,c.name client_name FROM abby_invoices a LEFT JOIN clients c ON c.id=a.client_id ORDER BY a.id DESC LIMIT 5").all()
+   env.DB.prepare("SELECT a.*,c.name client_name,t.paid_at FROM abby_invoices a LEFT JOIN clients c ON c.id=a.client_id LEFT JOIN tasks t ON t.source='abby' AND t.source_id=a.id ORDER BY COALESCE(t.paid_at,a.created_at) DESC LIMIT 5").all()
   ]);
-  return Response.json({ok:true,metrics:{clients:active?.n||0,prospects:prospects?.n||0,quotes:quotes?.n||0,tasks:openTasks?.n||0,late:lateTasks?.n||0,stripeMonth:stripeMonth?.cents||0,stripeYear:stripeYear?.cents||0,unpaidAbby:unpaidAbby?.cents||0,unpaidAbbyCount:unpaidAbby?.n||0,paidAbby:paidAbby?.cents||0},recent:recentDocs.results||[],nextTasks:nextTasks.results||[],recentPayments:recentPayments.results||[],recentAbby:recentAbby.results||[]});
+  return Response.json({ok:true,metrics:{clients:active?.n||0,prospects:prospects?.n||0,quotes:quotes?.n||0,tasks:openTasks?.n||0,late:lateTasks?.n||0,stripeMonth:stripeMonth?.cents||0,stripeYear:stripeYear?.cents||0,unpaidAbby:unpaidAbby?.cents||0,unpaidAbbyCount:unpaidAbby?.n||0,paidAbby:paidAbby?.cents||0,paidAbbyMonth:paidAbbyMonth?.cents||0,paidAbbyYear:paidAbbyYear?.cents||0},recent:recentDocs.results||[],nextTasks:nextTasks.results||[],recentPayments:recentPayments.results||[],recentAbby:recentAbby.results||[]});
  }
  if(section==='clients'){await ensureClientColumns(env);const r=await env.DB.prepare('SELECT * FROM clients ORDER BY id DESC').all();return Response.json({ok:true,items:r.results||[]})}
  if(section==='client-detail'){
@@ -144,10 +146,19 @@ export async function onRequestPost({request,env}){
  if(b.action==='document.delete'){
   const id=Number(b.id); if(!id)return bad('Devis invalide');
   const doc=await env.DB.prepare("SELECT * FROM documents WHERE id=? AND kind='devis'").bind(id).first(); if(!doc)return bad('Devis introuvable');
-  if(doc.status==='facture')return bad('Suppression impossible : ce devis est déjà lié à une facture Abby.');
-  const linked=await env.DB.prepare("SELECT COUNT(*) n FROM abby_invoices WHERE notes LIKE ?").bind('%'+String(doc.number||'')+'%').first();
-  if(linked?.n)return bad('Suppression impossible : une facture Abby semble liée à ce devis.');
+  const linked=(await env.DB.prepare("SELECT id,abby_number FROM abby_invoices WHERE notes LIKE ?").bind('%'+String(doc.number||'')+'%').all()).results||[];
+  if((doc.status==='facture'||linked.length) && !b.cascade)return bad('Ce devis est lié à Abby. Utilisez la suppression complète pour retirer le devis de test, son suivi Abby et son échéance.');
+  if(b.cascade){
+   for(const a of linked){ await env.DB.prepare("DELETE FROM tasks WHERE source='abby' AND source_id=?").bind(a.id).run(); await env.DB.prepare("DELETE FROM abby_invoices WHERE id=?").bind(a.id).run(); }
+  }
   await env.DB.prepare("DELETE FROM documents WHERE id=? AND kind='devis'").bind(id).run();
+  return Response.json({ok:true,deletedAbby:linked.length});
+ }
+ if(b.action==='abby.invoice.delete'){
+  const id=Number(b.id); if(!id)return bad('Facture Abby invalide');
+  const a=await env.DB.prepare('SELECT * FROM abby_invoices WHERE id=?').bind(id).first(); if(!a)return bad('Suivi Abby introuvable');
+  await env.DB.prepare("DELETE FROM tasks WHERE source='abby' AND source_id=?").bind(id).run();
+  await env.DB.prepare('DELETE FROM abby_invoices WHERE id=?').bind(id).run();
   return Response.json({ok:true});
  }
  if(b.action==='abby.invoice.create'){
