@@ -13,7 +13,7 @@ async function verifyStripeSignature(raw,header,secret){
   const mac=await crypto.subtle.sign('HMAC',key,new TextEncoder().encode(`${timestamp}.${raw}`));
   return timingSafeEqual(hex(mac),signature)
 }
-const OFFERS={9000:['diagnostic','Diagnostic Budget'],18000:['serenite-budget','Sérénité Budget'],36000:['vip-trimestriel','Sérénité VIP — Trimestriel'],110000:['vip-annuel','Sérénité VIP — Annuel']};
+const OFFERS={100:['test-paiement','Test paiement Laur’Appui'],9000:['diagnostic','Diagnostic Budget'],18000:['serenite-budget','Sérénité Budget'],36000:['vip-trimestriel','Sérénité VIP — Trimestriel'],110000:['vip-annuel','Sérénité VIP — Annuel']};
 export async function onRequestPost({request,env}){
   if(!env.DB||(!env.STRIPE_WEBHOOK_SECRET&&!env.STRIPE_WEBHOOK_SECRET_TEST))return new Response('Configuration incomplète',{status:503});
   const raw=await request.text();
