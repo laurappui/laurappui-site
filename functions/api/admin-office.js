@@ -91,7 +91,10 @@ export async function onRequestPost({request,env}){
  if(b.action==='abby.invoice.create'){
   if(!String(b.abby_number||'').trim())return bad('Numéro de facture Abby obligatoire');
   await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
+  const duplicate=await env.DB.prepare('SELECT id FROM abby_invoices WHERE lower(abby_number)=lower(?) LIMIT 1').bind(b.abby_number.trim()).first();
+  if(duplicate)return bad('Ce numéro de facture Abby est déjà enregistré dans le CRM.');
   const r=await env.DB.prepare('INSERT INTO abby_invoices(client_id,abby_number,label,amount_cents,status,issue_date,due_date,payment_method,abby_url,notes) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(b.client_id||null,b.abby_number.trim(),b.label||'Prestation Laur’Appui',Math.round(Number(b.amount||0)*100),b.status||'envoyee',b.issue_date||null,b.due_date||null,b.payment_method||'',b.abby_url||'',b.notes||'').run();
+  const quoteId=Number(b.quote_id||0); if(quoteId) await env.DB.prepare("UPDATE documents SET status='facture' WHERE id=? AND kind='devis'").bind(quoteId).run();
   return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='task.create'){
@@ -105,6 +108,7 @@ export async function onRequestPost({request,env}){
    if(!row)return bad('Devis introuvable');
    if(row.type==='professionnel'&&!/^\d{14}$/.test(String(row.siret||'').replace(/\s/g,'')))return bad('SIRET du client professionnel à compléter avant facturation Abby');
   }
+  if(b.entity==='document'&&!['brouillon','envoye','accepte','refuse','expire','a-facturer-abby','facture'].includes(b.status))return bad('Statut de devis invalide');
   await env.DB.prepare(`UPDATE ${table} SET status=? WHERE id=?`).bind(b.status,b.id).run();return Response.json({ok:true});
  }
  return bad('Action inconnue');
