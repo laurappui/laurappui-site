@@ -198,11 +198,19 @@ export async function onRequestPost({request,env}){
   const task=await env.DB.prepare("SELECT * FROM tasks WHERE id=? AND source='abby' AND task_type='paiement' LIMIT 1").bind(id).first();
   if(!task)return bad('Échéance de paiement Abby introuvable');
   const paid=!!b.paid;
+  let paidAt=null;
+  if(paid){
+   const raw=String(b.paid_date||'').trim();
+   if(!/^\d{4}-\d{2}-\d{2}$/.test(raw)) return bad('Date de paiement invalide');
+   const parsed=new Date(raw+'T12:00:00Z');
+   if(Number.isNaN(parsed.getTime())) return bad('Date de paiement invalide');
+   paidAt=raw+'T12:00:00Z';
+  }
   if(task.source_id){
    await env.DB.prepare("UPDATE abby_invoices SET status=? WHERE id=?").bind(paid?'payee':'envoyee',task.source_id).run();
   }
-  await env.DB.prepare("UPDATE tasks SET status=?,paid_at=? WHERE id=?").bind(paid?'terminee':'a-faire',paid?new Date().toISOString():null,id).run();
-  return Response.json({ok:true});
+  await env.DB.prepare("UPDATE tasks SET status=?,paid_at=? WHERE id=?").bind(paid?'terminee':'a-faire',paidAt,id).run();
+  return Response.json({ok:true,paid_at:paidAt});
  }
  if(b.action==='task.create'){
   await ensureTaskColumns(env); if(!String(b.title||'').trim())return bad('Titre obligatoire'); const r=await env.DB.prepare("INSERT INTO tasks(client_id,title,due_date,priority,status,task_type,source) VALUES(?,?,?,?,?,?,?)").bind(b.client_id||null,b.title.trim(),b.due_date||null,b.priority||'normale','a-faire','tache','manuel').run();return Response.json({ok:true,id:r.meta.last_row_id});

@@ -1,3 +1,7 @@
+# Laur’Appui — V26 Production
+
+Version de référence production. Voir `MISE-A-JOUR-V26-PRODUCTION.md`.
+
 # Laur'Appui — V5.9 GitHub
 
 Cette version conserve intégralement le Hero déjà validé.
