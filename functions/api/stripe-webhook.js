@@ -1,5 +1,5 @@
 // Laur'Appui — Stripe -> CRM/D1
-// Secrets requis : STRIPE_WEBHOOK_SECRET. Binding D1 : DB.
+// Secrets requis : STRIPE_WEBHOOK_SECRET (production) et STRIPE_WEBHOOK_SECRET_TEST (test). Binding D1 : DB.
 // Événements Stripe à envoyer : checkout.session.completed et checkout.session.async_payment_succeeded.
 
 function hex(bytes){return [...new Uint8Array(bytes)].map(b=>b.toString(16).padStart(2,'0')).join('')}
@@ -15,9 +15,16 @@ async function verifyStripeSignature(raw,header,secret){
 }
 const OFFERS={9000:['diagnostic','Diagnostic Budget'],18000:['serenite-budget','Sérénité Budget'],36000:['vip-trimestriel','Sérénité VIP — Trimestriel'],110000:['vip-annuel','Sérénité VIP — Annuel']};
 export async function onRequestPost({request,env}){
-  if(!env.DB||!env.STRIPE_WEBHOOK_SECRET)return new Response('Configuration incomplète',{status:503});
+  if(!env.DB||(!env.STRIPE_WEBHOOK_SECRET&&!env.STRIPE_WEBHOOK_SECRET_TEST))return new Response('Configuration incomplète',{status:503});
   const raw=await request.text();
-  if(!await verifyStripeSignature(raw,request.headers.get('stripe-signature'),env.STRIPE_WEBHOOK_SECRET))return new Response('Signature invalide',{status:400});
+  const signatureHeader=request.headers.get('stripe-signature');
+  const validProduction=env.STRIPE_WEBHOOK_SECRET
+    ? await verifyStripeSignature(raw,signatureHeader,env.STRIPE_WEBHOOK_SECRET)
+    : false;
+  const validTest=!validProduction&&env.STRIPE_WEBHOOK_SECRET_TEST
+    ? await verifyStripeSignature(raw,signatureHeader,env.STRIPE_WEBHOOK_SECRET_TEST)
+    : false;
+  if(!validProduction&&!validTest)return new Response('Signature invalide',{status:400});
   let event;try{event=JSON.parse(raw)}catch{return new Response('JSON invalide',{status:400})}
   if(!['checkout.session.completed','checkout.session.async_payment_succeeded'].includes(event.type))return new Response('ok');
   const s=event.data?.object;if(!s||s.payment_status!=='paid')return new Response('ok');
