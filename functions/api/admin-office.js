@@ -14,7 +14,8 @@ async function ensureTaskColumns(env){
   "ALTER TABLE tasks ADD COLUMN label TEXT",
   "ALTER TABLE tasks ADD COLUMN amount_cents INTEGER DEFAULT 0",
   "ALTER TABLE tasks ADD COLUMN source TEXT DEFAULT 'manuel'",
-  "ALTER TABLE tasks ADD COLUMN source_id INTEGER"
+  "ALTER TABLE tasks ADD COLUMN source_id INTEGER",
+  "ALTER TABLE tasks ADD COLUMN paid_at TEXT"
  ]){try{await env.DB.prepare(sql).run()}catch{}}
 }
 async function syncAbbyDeadlines(env){
@@ -125,6 +126,18 @@ export async function onRequestPost({request,env}){
   const r=await env.DB.prepare('INSERT INTO abby_invoices(client_id,abby_number,label,amount_cents,status,issue_date,due_date,payment_method,abby_url,notes) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(b.client_id||null,b.abby_number.trim(),b.label||'Prestation Laur’Appui',Math.round(Number(b.amount||0)*100),b.status||'envoyee',b.issue_date||null,b.due_date||null,b.payment_method||'',b.abby_url||'',b.notes||'').run();
   const quoteId=Number(b.quote_id||0); if(quoteId) await env.DB.prepare("UPDATE documents SET status='facture' WHERE id=? AND kind='devis'").bind(quoteId).run();
   return Response.json({ok:true,id:r.meta.last_row_id});
+ }
+ if(b.action==='task.payment'){
+  await ensureTaskColumns(env);
+  const id=Number(b.id); if(!id)return bad('Échéance invalide');
+  const task=await env.DB.prepare("SELECT * FROM tasks WHERE id=? AND source='abby' AND task_type='paiement' LIMIT 1").bind(id).first();
+  if(!task)return bad('Échéance de paiement Abby introuvable');
+  const paid=!!b.paid;
+  if(task.source_id){
+   await env.DB.prepare("UPDATE abby_invoices SET status=? WHERE id=?").bind(paid?'payee':'envoyee',task.source_id).run();
+  }
+  await env.DB.prepare("UPDATE tasks SET status=?,paid_at=? WHERE id=?").bind(paid?'terminee':'a-faire',paid?new Date().toISOString():null,id).run();
+  return Response.json({ok:true});
  }
  if(b.action==='task.create'){
   await ensureTaskColumns(env); if(!String(b.title||'').trim())return bad('Titre obligatoire'); const r=await env.DB.prepare("INSERT INTO tasks(client_id,title,due_date,priority,status,task_type,source) VALUES(?,?,?,?,?,?,?)").bind(b.client_id||null,b.title.trim(),b.due_date||null,b.priority||'normale','a-faire','tache','manuel').run();return Response.json({ok:true,id:r.meta.last_row_id});
