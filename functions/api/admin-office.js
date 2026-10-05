@@ -6,6 +6,35 @@ async function ensureCrmTables(env){
  for(const sql of ["ALTER TABLE contact_requests ADD COLUMN admin_email_status TEXT DEFAULT 'non-configure'","ALTER TABLE contact_requests ADD COLUMN client_email_status TEXT DEFAULT 'non-configure'"]){try{await env.DB.prepare(sql).run()}catch{}}
  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS client_exchanges (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER NOT NULL, exchange_type TEXT NOT NULL, summary TEXT NOT NULL, next_action TEXT, exchange_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
 }
+
+async function ensureTaskColumns(env){
+ for(const sql of [
+  "ALTER TABLE tasks ADD COLUMN task_type TEXT DEFAULT 'tache'",
+  "ALTER TABLE tasks ADD COLUMN reference TEXT",
+  "ALTER TABLE tasks ADD COLUMN label TEXT",
+  "ALTER TABLE tasks ADD COLUMN amount_cents INTEGER DEFAULT 0",
+  "ALTER TABLE tasks ADD COLUMN source TEXT DEFAULT 'manuel'",
+  "ALTER TABLE tasks ADD COLUMN source_id INTEGER"
+ ]){try{await env.DB.prepare(sql).run()}catch{}}
+}
+async function syncAbbyDeadlines(env){
+ await ensureTaskColumns(env);
+ await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
+ const rows=(await env.DB.prepare("SELECT * FROM abby_invoices WHERE due_date IS NOT NULL AND trim(due_date)<>''").all()).results||[];
+ for(const a of rows){
+  const done=['payee','avoir'].includes(String(a.status||'').toLowerCase());
+  const existing=await env.DB.prepare("SELECT id FROM tasks WHERE source='abby' AND source_id=? LIMIT 1").bind(a.id).first();
+  const title=`Règlement facture ${a.abby_number}`;
+  if(existing){
+   await env.DB.prepare("UPDATE tasks SET client_id=?,title=?,due_date=?,priority=?,status=?,task_type='paiement',reference=?,label=?,amount_cents=?,source='abby' WHERE id=?")
+    .bind(a.client_id||null,title,a.due_date,'haute',done?'terminee':'a-faire',a.abby_number,a.label||'',Number(a.amount_cents||0),existing.id).run();
+  }else{
+   await env.DB.prepare("INSERT INTO tasks(client_id,title,due_date,status,priority,task_type,reference,label,amount_cents,source,source_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)")
+    .bind(a.client_id||null,title,a.due_date,done?'terminee':'a-faire','haute','paiement',a.abby_number,a.label||'',Number(a.amount_cents||0),'abby',a.id).run();
+  }
+ }
+}
+
 async function ensureDocColumns(env){for(const sql of ["ALTER TABLE documents ADD COLUMN payment_plan TEXT","ALTER TABLE documents ADD COLUMN quote_date TEXT"]){try{await env.DB.prepare(sql).run()}catch{}}}
 async function auth(request,env){return await isAdmin(request,env)}
 export async function onRequestGet({request,env}){
@@ -44,7 +73,7 @@ export async function onRequestGet({request,env}){
    env.DB.prepare("SELECT a.*,c.name client_name FROM abby_invoices a LEFT JOIN clients c ON c.id=a.client_id ORDER BY a.id DESC").all()
   ]);return Response.json({ok:true,items:r.results||[],abby:a.results||[]})}
 
- if(section==='tasks'){const r=await env.DB.prepare("SELECT t.*,c.name client_name FROM tasks t LEFT JOIN clients c ON c.id=t.client_id ORDER BY CASE WHEN due_date IS NULL THEN 1 ELSE 0 END,due_date,id DESC").all();return Response.json({ok:true,items:r.results||[]})}
+ if(section==='tasks'){await syncAbbyDeadlines(env);const r=await env.DB.prepare("SELECT t.*,c.name client_name FROM tasks t LEFT JOIN clients c ON c.id=t.client_id ORDER BY CASE WHEN t.status='terminee' THEN 1 ELSE 0 END,CASE WHEN due_date IS NULL THEN 1 ELSE 0 END,due_date,id DESC").all();return Response.json({ok:true,items:r.results||[]})}
  return bad('Section inconnue');
 }
 export async function onRequestPost({request,env}){
@@ -98,7 +127,7 @@ export async function onRequestPost({request,env}){
   return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='task.create'){
-  if(!String(b.title||'').trim())return bad('Titre obligatoire'); const r=await env.DB.prepare('INSERT INTO tasks(client_id,title,due_date,priority) VALUES(?,?,?,?)').bind(b.client_id||null,b.title.trim(),b.due_date||null,b.priority||'normale').run();return Response.json({ok:true,id:r.meta.last_row_id});
+  await ensureTaskColumns(env); if(!String(b.title||'').trim())return bad('Titre obligatoire'); const r=await env.DB.prepare("INSERT INTO tasks(client_id,title,due_date,priority,status,task_type,source) VALUES(?,?,?,?,?,?,?)").bind(b.client_id||null,b.title.trim(),b.due_date||null,b.priority||'normale','a-faire','tache','manuel').run();return Response.json({ok:true,id:r.meta.last_row_id});
  }
  if(b.action==='status'){
   const tables={client:'clients',document:'documents',task:'tasks'};const table=tables[b.entity];if(!table)return bad('Entité invalide');
@@ -109,6 +138,7 @@ export async function onRequestPost({request,env}){
    if(row.type==='professionnel'&&!/^\d{14}$/.test(String(row.siret||'').replace(/\s/g,'')))return bad('SIRET du client professionnel à compléter avant facturation Abby');
   }
   if(b.entity==='document'&&!['brouillon','envoye','accepte','refuse','expire','a-facturer-abby','facture'].includes(b.status))return bad('Statut de devis invalide');
+  if(b.entity==='task'&&!['a-faire','terminee'].includes(b.status))return bad('Statut d’échéance invalide');
   await env.DB.prepare(`UPDATE ${table} SET status=? WHERE id=?`).bind(b.status,b.id).run();return Response.json({ok:true});
  }
  return bad('Action inconnue');

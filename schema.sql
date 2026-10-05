@@ -27,3 +27,6 @@ CREATE TABLE IF NOT EXISTS abby_invoices (
 );
 
 CREATE TABLE IF NOT EXISTS contact_requests (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, request_type TEXT, offer TEXT, subject TEXT, message TEXT, availability TEXT, preferred_contact TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+
+-- V23 — colonnes enrichies des échéances (les installations existantes sont migrées automatiquement par l'API)
+-- task_type: tache | paiement ; source: manuel | abby
