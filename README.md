@@ -192,3 +192,11 @@ V13 CRM : demandes site par client, historique des échanges, recherche, filtres
 
 ## V18 — Stripe actif
 Les quatre Stripe Payment Links de production sont intégrés : Diagnostic Budget 90 €, Sérénité Budget 180 €, VIP Trimestriel 360 € et VIP Annuel 1 100 €. Le site utilise un prix total par offre ; les éventuels paiements fractionnés sont proposés par les prestataires disponibles (ex. PayPal/Scalapay) selon l’éligibilité du client.
+
+
+## V19 — 5 octobre 2026
+- CGV mises à jour : Stripe actif, PayPal/Scalapay et fractionnement selon éligibilité du prestataire.
+- Correction du nom AlterNATIVE dans la médiation.
+- Webhook Stripe → CRM renforcé pour les paiements immédiats et asynchrones.
+- Reconnaissance automatique des 4 offres par montant.
+- Facturation officielle conservée dans Abby.
