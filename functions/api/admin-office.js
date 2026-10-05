@@ -42,13 +42,24 @@ export async function onRequestGet({request,env}){
  if(!await auth(request,env)) return bad('Non autorisé',401); if(!env.DB)return bad('Base D1 non configurée',503);
  const u=new URL(request.url), section=u.searchParams.get('section')||'dashboard';
  if(section==='dashboard'){
-  const [c,d,t,p]=await Promise.all([
+  await ensureClientColumns(env);
+  await syncAbbyDeadlines(env);
+  const [active,prospects,quotes,openTasks,lateTasks,stripeMonth,stripeYear,unpaidAbby,paidAbby,recentDocs,nextTasks,recentPayments,recentAbby]=await Promise.all([
    env.DB.prepare("SELECT COUNT(*) n FROM clients WHERE status='actif'").first(),
-   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(CASE WHEN status='payee' THEN amount_cents ELSE 0 END),0) paid FROM documents").first(),
+   env.DB.prepare("SELECT COUNT(*) n FROM clients WHERE status='prospect'").first(),
+   env.DB.prepare("SELECT COUNT(*) n FROM documents WHERE kind='devis' AND status IN ('brouillon','envoye','accepte','a-facturer-abby')").first(),
    env.DB.prepare("SELECT COUNT(*) n FROM tasks WHERE status!='terminee'").first(),
-   env.DB.prepare('SELECT COUNT(*) n,COALESCE(SUM(amount_total),0) cents FROM payments').first()]);
-  const recent=await env.DB.prepare("SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id ORDER BY d.id DESC LIMIT 8").all();
-  return Response.json({ok:true,metrics:{clients:c.n,documents:d.n,tasks:t.n,payments:p.n,paid:d.paid,stripe:p.cents},recent:recent.results||[]});
+   env.DB.prepare("SELECT COUNT(*) n FROM tasks WHERE status!='terminee' AND due_date IS NOT NULL AND date(due_date)<date('now')").first(),
+   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_total),0) cents FROM payments WHERE strftime('%Y-%m',datetime(paid_at))=strftime('%Y-%m','now')").first(),
+   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_total),0) cents FROM payments WHERE strftime('%Y',datetime(paid_at))=strftime('%Y','now')").first(),
+   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_cents),0) cents FROM abby_invoices WHERE lower(COALESCE(status,'')) NOT IN ('payee','avoir')").first(),
+   env.DB.prepare("SELECT COUNT(*) n,COALESCE(SUM(amount_cents),0) cents FROM abby_invoices WHERE lower(COALESCE(status,''))='payee'").first(),
+   env.DB.prepare("SELECT d.*,c.name client_name FROM documents d LEFT JOIN clients c ON c.id=d.client_id ORDER BY d.id DESC LIMIT 6").all(),
+   env.DB.prepare("SELECT t.*,c.name client_name FROM tasks t LEFT JOIN clients c ON c.id=t.client_id WHERE t.status!='terminee' ORDER BY CASE WHEN t.due_date IS NULL THEN 1 ELSE 0 END,t.due_date,t.id DESC LIMIT 8").all(),
+   env.DB.prepare("SELECT id,customer_name,customer_email,offer_label,amount_total,paid_at FROM payments ORDER BY datetime(paid_at) DESC LIMIT 5").all(),
+   env.DB.prepare("SELECT a.*,c.name client_name FROM abby_invoices a LEFT JOIN clients c ON c.id=a.client_id ORDER BY a.id DESC LIMIT 5").all()
+  ]);
+  return Response.json({ok:true,metrics:{clients:active?.n||0,prospects:prospects?.n||0,quotes:quotes?.n||0,tasks:openTasks?.n||0,late:lateTasks?.n||0,stripeMonth:stripeMonth?.cents||0,stripeYear:stripeYear?.cents||0,unpaidAbby:unpaidAbby?.cents||0,unpaidAbbyCount:unpaidAbby?.n||0,paidAbby:paidAbby?.cents||0},recent:recentDocs.results||[],nextTasks:nextTasks.results||[],recentPayments:recentPayments.results||[],recentAbby:recentAbby.results||[]});
  }
  if(section==='clients'){await ensureClientColumns(env);const r=await env.DB.prepare('SELECT * FROM clients ORDER BY id DESC').all();return Response.json({ok:true,items:r.results||[]})}
  if(section==='client-detail'){
