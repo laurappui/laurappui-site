@@ -1,10 +1,10 @@
-// Laur’Appui — préparation Stripe V4 (aucun encaissement actif)
-// Renseigner les liens/checkout Stripe uniquement après ouverture et configuration du compte.
+// Laur’Appui — liens de paiement Stripe actifs
+// Le fractionnement éventuel (PayPal, Scalapay, etc.) est proposé par le prestataire selon l’éligibilité du client.
 window.LAURAPPUI_PAYMENTS = {
-  diagnostic_comptant: "", diagnostic_3x: "", diagnostic_4x: "",
-  sereniteBudget_comptant: "", sereniteBudget_3x: "", sereniteBudget_4x: "",
-  vipTrimestriel_comptant: "", vipTrimestriel_3x: "", vipTrimestriel_4x: "",
-  vipAnnuel_comptant: "", vipAnnuel_3x: "", vipAnnuel_4x: "", vipAnnuel_12x: ""
+  diagnostic: "https://buy.stripe.com/28EbJ0ajf0La7FAdi31ck00",
+  sereniteBudget: "https://buy.stripe.com/4gM6oG4YVgK85xsb9V1ck01",
+  vipTrimestriel: "https://buy.stripe.com/8x28wO2QNfG4e3Y4Lx1ck02",
+  vipAnnuel: "https://buy.stripe.com/00w5kC9fb9hG7FA2Dp1ck03"
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (url) { btn.target="_blank"; btn.rel="noopener"; } else btn.classList.add("is-disabled");
     btn.addEventListener("click", e => {
       if (consent && !consent.checked) { e.preventDefault(); alert("Veuillez lire et accepter les Conditions Générales de Vente avant de poursuivre vers le paiement."); return; }
-      if (!url) { e.preventDefault(); alert("Cette option de paiement sera disponible après l’activation du compte Stripe Laur’Appui."); }
+      if (!url) { e.preventDefault(); alert("Le lien de paiement est momentanément indisponible."); }
     });
   });
 });
