@@ -113,6 +113,27 @@ export async function onRequestPost({request,env}){
   const status=['prospect','actif','ancien','archive'].includes(b.status)?b.status:'actif';
   await env.DB.prepare('UPDATE clients SET type=?,name=?,company=?,email=?,phone=?,address=?,notes=?,siret=?,vat_number=?,postal_code=?,city=?,country=?,status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?').bind(type,b.name.trim(),type==='professionnel'?(b.company||'').trim():'',b.email.trim(),b.phone.trim(),b.address||'',b.notes||'',type==='professionnel'?siret:'',type==='professionnel'?(b.vat_number||'').trim():'',b.postal_code||'',b.city||'',b.country||'France',status,id).run(); return Response.json({ok:true});
  }
+ if(b.action==='client.purge-test'){
+  await ensureClientColumns(env); await ensureCrmTables(env); await ensureTaskColumns(env);
+  const id=Number(b.id); if(!id)return bad('Client invalide');
+  const c=await env.DB.prepare('SELECT id,email,status,name FROM clients WHERE id=?').bind(id).first(); if(!c)return bad('Client introuvable');
+  if(c.status!=='archive')return bad('La purge de test est autorisée uniquement pour une fiche Archivée.');
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS abby_invoices (id INTEGER PRIMARY KEY AUTOINCREMENT, client_id INTEGER, abby_number TEXT NOT NULL, label TEXT NOT NULL, amount_cents INTEGER NOT NULL DEFAULT 0, status TEXT NOT NULL DEFAULT 'a-facturer', issue_date TEXT, due_date TEXT, payment_method TEXT, abby_url TEXT, notes TEXT, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(client_id) REFERENCES clients(id))`).run();
+  const abby=(await env.DB.prepare('SELECT id FROM abby_invoices WHERE client_id=?').bind(id).all()).results||[];
+  for(const a of abby) await env.DB.prepare("DELETE FROM tasks WHERE source='abby' AND source_id=?").bind(a.id).run();
+  await env.DB.prepare('DELETE FROM tasks WHERE client_id=?').bind(id).run();
+  await env.DB.prepare('DELETE FROM abby_invoices WHERE client_id=?').bind(id).run();
+  await env.DB.prepare('DELETE FROM documents WHERE client_id=?').bind(id).run();
+  await env.DB.prepare('DELETE FROM contact_requests WHERE client_id=?').bind(id).run();
+  await env.DB.prepare('DELETE FROM client_exchanges WHERE client_id=?').bind(id).run();
+  let deletedPayments=0;
+  if(String(c.email||'').trim()){
+    const pr=await env.DB.prepare('DELETE FROM payments WHERE lower(customer_email)=lower(?)').bind(c.email.trim()).run();
+    deletedPayments=Number(pr?.meta?.changes||0);
+  }
+  await env.DB.prepare('DELETE FROM clients WHERE id=?').bind(id).run();
+  return Response.json({ok:true,purged:true,deletedPayments});
+ }
  if(b.action==='client.delete'){
   const id=Number(b.id); if(!id)return bad('Client invalide'); const c=await env.DB.prepare('SELECT email FROM clients WHERE id=?').bind(id).first(); if(!c)return bad('Client introuvable');
   const [d,t,ai,pay]=await Promise.all([env.DB.prepare('SELECT COUNT(*) n FROM documents WHERE client_id=?').bind(id).first(),env.DB.prepare('SELECT COUNT(*) n FROM tasks WHERE client_id=?').bind(id).first(),env.DB.prepare('SELECT COUNT(*) n FROM abby_invoices WHERE client_id=?').bind(id).first(),env.DB.prepare('SELECT COUNT(*) n FROM payments WHERE lower(customer_email)=lower(?)').bind(c.email||'').first()]);
