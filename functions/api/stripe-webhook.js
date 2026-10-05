@@ -43,9 +43,21 @@ export async function onRequestPost({request,env}){
   const offerKey=s.metadata?.offer_key||fallback[0];
   const offerLabel=s.metadata?.offer_label||fallback[1];
   const token=crypto.randomUUID();
-  await env.DB.prepare(`INSERT OR IGNORE INTO payments
+  // V21.1 : un renvoi Stripe met à jour le paiement existant au lieu de l'ignorer.
+  // Le receipt_token et la date d'origine restent inchangés pour un paiement déjà enregistré.
+  await env.DB.prepare(`INSERT INTO payments
     (stripe_session_id,stripe_payment_intent,receipt_token,customer_email,customer_name,offer_key,offer_label,amount_total,currency,paid_at,client_id,stripe_payment_link)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+    ON CONFLICT(stripe_session_id) DO UPDATE SET
+      stripe_payment_intent=excluded.stripe_payment_intent,
+      customer_email=excluded.customer_email,
+      customer_name=excluded.customer_name,
+      offer_key=excluded.offer_key,
+      offer_label=excluded.offer_label,
+      amount_total=excluded.amount_total,
+      currency=excluded.currency,
+      client_id=excluded.client_id,
+      stripe_payment_link=excluded.stripe_payment_link`)
     .bind(s.id,s.payment_intent||'',token,email,name,offerKey,offerLabel,s.amount_total||0,s.currency||'eur',new Date().toISOString(),clientId,s.payment_link||'').run();
   return new Response('ok')
 }
