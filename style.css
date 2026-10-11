@@ -1365,3 +1365,27 @@ img{max-width:100%;height:auto}
 
 /* V16 — informations juridiques finalisées */
 .legal-card-v16,.legal-status-v16{background:#f7f1e7;border:1px solid rgba(169,128,72,.28);border-radius:14px;padding:16px 18px;margin:14px 0}.legal-card-v16 a{font-weight:700}.footer-legal-v542{flex-wrap:wrap}
+
+/* V5.47 — disposition harmonisée des offres particuliers uniquement */
+@media(min-width:701px){
+ body.pricing-page-v537 .pricing-switch-v517 .budget-grid-v547{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important;max-width:100%!important;margin:18px auto 0!important;align-items:stretch}
+ body.pricing-page-v537 .budget-grid-v547>.price-card-v516{height:100%;min-width:0}
+ body.pricing-page-v537 .budget-grid-v547>.vip-card-v522{margin:0!important}
+}
+body.pricing-page-v537 .dossier-section-head-v547{margin-top:34px!important;padding-top:24px;border-top:1px solid #e8d8c2}
+body.pricing-page-v537 .dossier-grid-v547{display:block;margin-top:16px}
+body.pricing-page-v537 .dossier-card-v547{display:grid!important;grid-template-columns:minmax(0,1fr) auto;column-gap:25px;align-items:center;text-align:left!important;min-height:0!important;padding:25px 28px!important}
+body.pricing-page-v537 .dossier-card-v547>i{grid-column:1;grid-row:1;margin:0 0 8px!important}
+body.pricing-page-v537 .dossier-card-v547>h3{grid-column:1;grid-row:2}
+body.pricing-page-v537 .dossier-card-v547>small{grid-column:1;grid-row:3}
+body.pricing-page-v537 .dossier-card-v547>.from-v516{grid-column:2;grid-row:1;text-align:center}
+body.pricing-page-v537 .dossier-card-v547>.price-v516{grid-column:2;grid-row:2 / span 2;text-align:center;margin:0!important}
+body.pricing-page-v537 .dossier-card-v547>ul{grid-column:1;grid-row:4;margin:13px 0 0!important;max-width:560px}
+body.pricing-page-v537 .dossier-card-v547>a{grid-column:2;grid-row:4;min-width:190px;align-self:end}
+@media(max-width:700px){
+ body.pricing-page-v537 .pricing-switch-v517 .budget-grid-v547{grid-template-columns:1fr!important}
+ body.pricing-page-v537 .dossier-card-v547{display:flex!important;flex-direction:column;text-align:center!important;padding:22px 18px!important}
+ body.pricing-page-v537 .dossier-card-v547>i{margin:0 auto 8px!important}
+ body.pricing-page-v537 .dossier-card-v547>ul{width:100%}
+ body.pricing-page-v537 .dossier-card-v547>a{width:100%;align-self:stretch}
+}
