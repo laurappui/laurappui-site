@@ -1,0 +1,4 @@
+Laur’Appui V6 — refonte graphique des pages Accueil, Prestations, Professionnels, Particuliers et Tarifs.
+Basée sur la V5. Textes, tarifs, formulaires, scripts de paiement, SEO et liens conservés.
+Améliorations : mise en forme, décorations CSS, cartes, boutons, footer commun et responsive.
+Déployer le contenu du dossier laurappui-site-main sur Cloudflare Pages / GitHub. Vérifier les pages et paiements après déploiement.
