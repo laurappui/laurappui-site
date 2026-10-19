@@ -1,0 +1,4 @@
+Laur’Appui V7 — Finitions visuelles.
+Déployer le contenu du dossier laurappui-site-main sur Cloudflare Pages.
+Améliorations : feuillages SVG, suppression des symboles abstraits, hiérarchie typographique, ombres et espacements.
+Fonctionnalités et SEO préservés depuis V6. Vérifier le rendu après déploiement.

@@ -1469,3 +1469,23 @@ body.pricing-page-v537 .dossier-card-v547>a{grid-column:2;grid-row:4;min-width:1
 @media(max-width:780px){.la-v6 .la-footer-grid{grid-template-columns:1fr 1fr;gap:22px}.la-v6 .la-footer-brand{grid-column:1/-1}.la-v6 .la-footer-bottom{display:block}.la-v6 .la-footer-bottom div{margin-top:12px}.la-v6.v5-home .hero-inner{padding-top:40px;padding-bottom:35px}.la-v6 .v5-stilllife{min-height:300px}.la-v6.v5-home .solutions .card{padding:27px}.la-v6.v5-services .audience-panel{padding:26px}}
 @media(max-width:480px){.la-v6 .la-footer-grid{grid-template-columns:1fr}.la-v6 .la-footer-brand{grid-column:auto}.la-v6 .v5-script{font-size:1.7rem}.la-v6 .v5-book-stack span{padding:10px 14px}.la-v6 .v5-method-grid article{padding:23px 18px}}
 @media(prefers-reduced-motion:reduce){.la-v6 *{transition:none!important}}
+
+/* V7 — finitions graphiques, végétaux SVG, typographie et hiérarchie */
+.la-v6 .v5-stilllife:before,.la-v6 .solutions:before,.la-v6 .solutions:after,.la-v6.v5-services .inner-hero:before,.la-v6 .cta:after,.la-v6 .inner-cta:after{content:""!important;background:url('assets/feuillage-dore-v7.svg') center/contain no-repeat!important;font-size:0!important;opacity:.52!important;transform:none!important;pointer-events:none;width:170px;height:245px;position:absolute}
+.la-v6 .v5-stilllife:before{left:3%;top:9%;width:190px;height:270px;transform:rotate(-15deg)!important;opacity:.48!important}
+.la-v6 .solutions:before{left:-35px;top:30px;transform:rotate(-24deg)!important}
+.la-v6 .solutions:after{right:-30px;bottom:0;transform:rotate(160deg)!important}
+.la-v6.v5-services .inner-hero:before{left:2%;top:0;transform:rotate(-20deg)!important}
+.la-v6 .cta:after,.la-v6 .inner-cta:after{right:1%;top:-45px;transform:rotate(18deg)!important;opacity:.25!important}
+.la-v6 .v5-leaves,.la-v6 .v5-pencil{display:none!important}
+.la-v6 .v5-stilllife{background:radial-gradient(ellipse at 68% 55%,#f5e5cf 0%,transparent 60%),linear-gradient(130deg,#fffaf3,#f2e3d0)!important}
+.la-v6 .v5-script{font-style:italic;letter-spacing:.015em;line-height:1.23;text-shadow:0 2px 8px #fff8}
+.la-v6 .v5-book-stack{max-width:370px;bottom:17%;right:10%;transform:perspective(800px) rotate(-3deg)!important}
+.la-v6 .v5-book-stack span{padding:16px 24px!important;box-shadow:5px 8px 11px #876d5140!important}
+.la-v6.v5-home .solutions .card,.la-v6.v5-services .audience-panel{box-shadow:0 15px 35px #49351918,0 2px 5px #4935190a!important}
+.la-v6 .v5-method-grid article{box-shadow:0 14px 28px #49351914!important}
+.la-v6 .v5-checklist li,.la-v6 .audience-panel p{font-size:1rem!important;line-height:1.65!important}
+.la-v6 .v5-method-grid article p{font-size:.98rem;line-height:1.6}
+.la-v6 .la-footer-grid a,.la-v6 .la-footer-grid p{font-size:.98rem}
+@media(min-width:900px){.la-v6.v5-home .hero-inner{padding-top:75px;padding-bottom:75px}.la-v6 .v5-method-home{padding-top:76px;padding-bottom:82px}.la-v6.v5-home .solutions{padding-top:80px;padding-bottom:90px}}
+@media(max-width:760px){.la-v6 .v5-stilllife:before{width:110px;height:170px;top:5%;left:2%}.la-v6 .solutions:before,.la-v6 .solutions:after{width:80px;height:130px;opacity:.22!important}.la-v6 .v5-script{font-size:1.5rem;right:7%}.la-v6 .v5-book-stack{right:8%;width:60%}.la-v6 .v5-book-stack span{padding:9px!important}}
