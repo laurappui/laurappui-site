@@ -1,0 +1,1 @@
+V8 : page accueil sans photo ni illustration. Base V7, autres pages conservees. Verifier rendu et liens apres deploiement.

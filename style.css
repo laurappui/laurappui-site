@@ -1489,3 +1489,22 @@ body.pricing-page-v537 .dossier-card-v547>a{grid-column:2;grid-row:4;min-width:1
 .la-v6 .la-footer-grid a,.la-v6 .la-footer-grid p{font-size:.98rem}
 @media(min-width:900px){.la-v6.v5-home .hero-inner{padding-top:75px;padding-bottom:75px}.la-v6 .v5-method-home{padding-top:76px;padding-bottom:82px}.la-v6.v5-home .solutions{padding-top:80px;padding-bottom:90px}}
 @media(max-width:760px){.la-v6 .v5-stilllife:before{width:110px;height:170px;top:5%;left:2%}.la-v6 .solutions:before,.la-v6 .solutions:after{width:80px;height:130px;opacity:.22!important}.la-v6 .v5-script{font-size:1.5rem;right:7%}.la-v6 .v5-book-stack{right:8%;width:60%}.la-v6 .v5-book-stack span{padding:9px!important}}
+
+/* V8 — accueil sans visuel, design editorial */
+.la-v8 .v8-hero{display:block!important;min-height:0!important;text-align:center;padding:90px 24px 0!important;background:linear-gradient(130deg,#fffdf9,#f8efe3)!important}
+.la-v8 .v8-wrap{max-width:880px;margin:auto}
+.la-v8 .v8-kicker{color:#aa7b42;letter-spacing:.21em;font:700 11px Arial,sans-serif}
+.la-v8 .v8-hero h1{font:700 clamp(65px,8vw,110px)/1.05 Georgia,serif!important;letter-spacing:-.04em;color:#083650;margin:25px 0 12px!important}
+.la-v8 .v8-heading{font:400 clamp(32px,4.4vw,59px)/1.15 Georgia,serif;color:#073650}
+.la-v8 .v8-heading em{font-style:normal;color:#b7894d}
+.la-v8 .v8-intro{font:400 clamp(15px,1.4vw,18px)/1.8 Arial,sans-serif;max-width:760px;margin:27px auto 31px;color:#36576a}
+.la-v8 .v8-buttons{display:flex;justify-content:center;gap:15px;flex-wrap:wrap}
+.la-v8 .v8-buttons a{padding:17px 25px;border-radius:8px;background:#073a55;color:#fff;text-decoration:none;font:700 14px Arial,sans-serif;box-shadow:0 8px 24px #1836491c;transition:transform .2s}
+.la-v8 .v8-buttons a:nth-child(2){background:#efd7b5;color:#073a55}
+.la-v8 .v8-buttons a:hover{transform:translateY(-3px)}
+.la-v8 .v8-sign{font:italic 24px Georgia,serif;color:#ae7e43;margin:32px 0 54px}
+.la-v8 .v8-values{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:950px;margin:auto;border-top:1px solid #decbb3;padding:26px 0 30px;color:#123f57;font:600 14px Arial,sans-serif}
+.la-v8 .v8-values>div+div{border-left:1px solid #decbb3}
+.la-v8 .v8-values b{color:#bb8c52;font:italic 22px Georgia,serif;margin-right:12px}
+.la-v8 .hero-photo{display:none!important}
+@media(max-width:700px){.la-v8 .v8-hero{padding:48px 18px 0!important}.la-v8 .v8-kicker{font-size:9px;letter-spacing:.1em}.la-v8 .v8-buttons{flex-direction:column;max-width:350px;margin:auto}.la-v8 .v8-sign{font-size:19px;margin-bottom:30px}.la-v8 .v8-values{grid-template-columns:1fr;padding:8px 0 20px}.la-v8 .v8-values>div{padding:12px}.la-v8 .v8-values>div+div{border-left:0;border-top:1px solid #decbb3}}
