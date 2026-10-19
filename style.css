@@ -1594,3 +1594,27 @@ body.pricing-page-v537 .dossier-card-v547>a{grid-column:2;grid-row:4;min-width:1
  .la-v9 .values{grid-template-columns:1fr!important}
  .la-v9 .value{border-right:0}
 }
+
+/* V10 — corrective responsive: remove inherited fixed-height hero */
+body.la-v9.v5-home section.hero.v8-hero{height:auto!important;min-height:0!important;max-height:none!important;display:block!important;overflow:visible!important;box-sizing:border-box;padding-bottom:0!important}
+body.la-v9.v5-home .v9-hero-content{height:auto!important;min-height:0!important;max-height:none!important;display:block!important;padding-bottom:1px}
+body.la-v9.v5-home .v8-intro,body.la-v9.v5-home .v8-buttons,body.la-v9.v5-home .v8-sign{position:relative;visibility:visible!important;opacity:1!important;max-height:none!important}
+body.la-v9.v5-home .v8-values{height:auto!important;max-height:none!important;position:relative!important;clear:both}
+body.la-v9.v5-home .v8-hero h1{overflow:visible!important}
+@media(max-width:700px){
+ body.la-v9.v5-home section.hero.v8-hero{padding:42px 18px 0!important}
+ body.la-v9.v5-home .v9-hero-content{width:100%!important;max-width:100%!important;box-sizing:border-box}
+ body.la-v9.v5-home .v8-hero h1.v9-brand-title{font-size:clamp(44px,12vw,68px)!important;line-height:1.1!important}
+ body.la-v9.v5-home .v9-subtitle{font-size:clamp(25px,7vw,36px)!important;line-height:1.23!important}
+ body.la-v9.v5-home .v8-intro{font-size:16px!important;line-height:1.75!important;max-width:42ch;margin:25px auto!important}
+ body.la-v9.v5-home .v8-buttons{display:flex!important;flex-direction:column!important;gap:12px!important;width:100%;max-width:400px;margin:0 auto!important}
+ body.la-v9.v5-home .v8-buttons a{display:flex!important;box-sizing:border-box;width:100%!important;min-height:52px!important;font-size:15px!important}
+ body.la-v9.v5-home .v8-sign{font-size:19px!important;line-height:1.4;margin:25px auto 32px!important}
+ body.la-v9.v5-home .v8-values{padding:14px 10px 20px!important}
+ body.la-v9.v5-home .solutions .cards{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:20px!important}
+ body.la-v9.v5-home .solutions .card{width:100%!important;min-width:0!important;box-sizing:border-box;padding:26px 22px!important}
+ body.la-v9.v5-home .solutions .card h3{font-size:24px!important}
+ body.la-v9.v5-home .solutions .card p,body.la-v9.v5-home .solutions .card li{font-size:15px!important;line-height:1.65!important}
+ body.la-v9 .la-footer-grid{grid-template-columns:minmax(0,1fr)!important}
+ body.la-v9 .la-footer-grid a,body.la-v9 .la-footer-grid p{overflow-wrap:anywhere}
+}

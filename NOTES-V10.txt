@@ -1,0 +1,1 @@
+V10 : correction hauteur fixe du hero V9 (contenu coupe sur ordinateur), ajustements mobiles, preservation des textes SEO et des liens. Verifier sur Cloudflare Pages apres deploiement.
