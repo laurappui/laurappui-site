@@ -1508,3 +1508,89 @@ body.pricing-page-v537 .dossier-card-v547>a{grid-column:2;grid-row:4;min-width:1
 .la-v8 .v8-values b{color:#bb8c52;font:italic 22px Georgia,serif;margin-right:12px}
 .la-v8 .hero-photo{display:none!important}
 @media(max-width:700px){.la-v8 .v8-hero{padding:48px 18px 0!important}.la-v8 .v8-kicker{font-size:9px;letter-spacing:.1em}.la-v8 .v8-buttons{flex-direction:column;max-width:350px;margin:auto}.la-v8 .v8-sign{font-size:19px;margin-bottom:30px}.la-v8 .v8-values{grid-template-columns:1fr;padding:8px 0 20px}.la-v8 .v8-values>div{padding:12px}.la-v8 .v8-values>div+div{border-left:0;border-top:1px solid #decbb3}}
+
+
+/* V9 — hero editorial premium, typographie accessible, responsive mobile */
+.la-v9 .v8-hero{position:relative;background:linear-gradient(135deg,#fffdfa 0%,#fbf5eb 55%,#f4e7d6 100%)!important;padding:clamp(64px,7.5vw,115px) 22px 0!important;overflow:hidden;isolation:isolate}
+.la-v9 .v8-hero:before{content:'';position:absolute;z-index:-1;inset:30px auto auto 50%;width:min(780px,90vw);height:480px;transform:translateX(-50%);background:radial-gradient(ellipse,#fffdfa 5%,transparent 72%);pointer-events:none}
+.la-v9 .v9-hero-content{max-width:930px;margin:auto}
+.la-v9 .v9-eyebrow{display:flex;align-items:center;justify-content:center;gap:18px;font-size:clamp(10px,1.1vw,12px)!important;line-height:1.65;letter-spacing:.18em!important;color:#9e6d34}
+.la-v9 .v9-eyebrow:before,.la-v9 .v9-eyebrow:after{content:'';display:block;width:clamp(20px,5vw,55px);height:1px;background:#cba877;flex-shrink:0}
+.la-v9 .v8-hero h1.v9-brand-title{font-size:clamp(70px,9.2vw,124px)!important;line-height:1.04!important;margin:22px 0 12px!important;letter-spacing:-.045em}
+.la-v9 .v9-subtitle{font-size:clamp(31px,4.7vw,62px)!important;line-height:1.17;letter-spacing:-.025em}
+.la-v9 .v9-subtitle em{color:#b58245}
+.la-v9 .v9-subtitle:after{content:'';display:block;width:74px;height:2px;background:#bf935e;margin:26px auto 0}
+.la-v9 .v8-intro{font-size:clamp(16px,1.35vw,19px)!important;line-height:1.78!important;max-width:790px;margin:25px auto 30px}
+.la-v9 .v8-buttons{gap:14px}
+.la-v9 .v8-buttons a{min-height:52px;display:inline-flex;align-items:center;justify-content:center;line-height:1.35;font-size:15px!important;padding:15px 24px!important;border-radius:9px}
+.la-v9 .v8-sign{font-size:clamp(20px,2vw,25px);margin:30px 0 47px}
+.la-v9 .v8-values{padding:27px 0 30px;max-width:1020px;font-size:15px}
+.la-v9 .v8-values>div{padding:5px 14px}
+.la-v9 .v8-values b{font-size:23px}
+.la-v9 .solutions .heading h2,.la-v9 .v5-method-home h2{line-height:1.2}
+.la-v9 .v5-home .solutions .card,.la-v9.v5-home .solutions .card{min-height:0}
+.la-v9 .v5-checklist li{font-size:16px!important;line-height:1.6}
+.la-v9 .la-footer-grid a,.la-v9 .la-footer-grid p{line-height:1.65}
+@media (max-width:900px){
+ .la-v9 .nav{width:calc(100% - 32px);gap:12px}
+ .la-v9 .brand-official img{max-width:min(280px,65vw);height:auto}
+ .la-v9 .values{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .la-v9 .value{padding:18px 12px}
+ .la-v9 .value p{font-size:15px;line-height:1.5}
+ .la-v9 .v5-method-grid{grid-template-columns:1fr}
+ .la-v9 .v5-method-grid article{padding:26px}
+}
+@media (max-width:700px){
+ .la-v9 .v8-hero{padding:56px 20px 0!important}
+ .la-v9 .v9-eyebrow{font-size:10px!important;letter-spacing:.075em!important;gap:8px}
+ .la-v9 .v9-eyebrow:before,.la-v9 .v9-eyebrow:after{width:15px}
+ .la-v9 .v8-hero h1.v9-brand-title{font-size:clamp(52px,13.5vw,78px)!important;margin:19px 0 12px!important;white-space:normal;overflow-wrap:normal}
+ .la-v9 .v9-subtitle{font-size:clamp(28px,7vw,39px)!important}
+ .la-v9 .v9-subtitle:after{margin:23px auto 0}
+ .la-v9 .v8-intro{font-size:16px!important;line-height:1.72!important;margin:23px auto 27px}
+ .la-v9 .v8-buttons{width:100%;max-width:410px;margin:auto;flex-direction:column}
+ .la-v9 .v8-buttons a{width:100%;font-size:15px!important;min-height:54px}
+ .la-v9 .v8-sign{font-size:20px;margin:26px 0 32px}
+ .la-v9 .v8-values{grid-template-columns:1fr;font-size:15px}
+ .la-v9 .v8-values>div{padding:14px 10px}
+ .la-v9 .values{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0}
+ .la-v9 .value{padding:22px 10px;border-bottom:1px solid #eee1d0}
+ .la-v9 .value h3{font-size:19px}
+ .la-v9 .value p{font-size:15px}
+ .la-v9 .solutions{padding:54px 0 60px!important}
+ .la-v9 .solutions .wrap,.la-v9 .v5-method-home .wrap,.la-v9 .about .wrap{width:min(100% - 36px,620px)}
+ .la-v9 .solutions .heading h2,.la-v9 .v5-method-home h2{font-size:clamp(27px,7vw,35px)!important}
+ .la-v9 .solutions .heading p,.la-v9 .v5-method-home p{font-size:16px;line-height:1.6}
+ .la-v9.v5-home .solutions .cards{grid-template-columns:1fr;gap:22px}
+ .la-v9.v5-home .solutions .card{padding:28px 24px!important;border-radius:18px}
+ .la-v9.v5-home .solutions .card h3{font-size:clamp(24px,6vw,30px)!important;line-height:1.18}
+ .la-v9.v5-home .solutions .card p{font-size:16px;line-height:1.6}
+ .la-v9 .v5-checklist li{font-size:15.5px!important;padding:7px 0}
+ .la-v9 .v5-method-home{padding:58px 0 64px}
+ .la-v9 .v5-method-grid{gap:18px;margin-top:26px}
+ .la-v9 .v5-method-grid article{padding:28px 24px}
+ .la-v9 .v5-method-grid article h3{font-size:23px}
+ .la-v9 .v5-method-grid article p{font-size:16px!important;line-height:1.6}
+ .la-v9 .about-home-grid{display:grid!important;grid-template-columns:1fr!important;gap:25px;width:min(100% - 36px,620px)}
+ .la-v9 .about-home-grid>*{min-width:0;max-width:100%}
+ .la-v9 .about h2{font-size:clamp(27px,7vw,35px);line-height:1.2}
+ .la-v9 .about p{font-size:16px;line-height:1.7}
+ .la-v9 .cta .wrap{width:min(100% - 36px,620px)}
+ .la-v9 .cta h2{font-size:27px}
+ .la-v9 .cta p{font-size:16px;line-height:1.6}
+ .la-v9 .la-footer-v6{padding-top:40px}
+ .la-v9 .la-footer-grid{width:min(100% - 36px,620px);grid-template-columns:1fr;gap:28px;padding-bottom:28px}
+ .la-v9 .la-footer-brand{grid-column:auto}
+ .la-v9 .la-footer-brand img{width:240px;max-width:85%}
+ .la-v9 .la-footer-grid h3{font-size:22px}
+ .la-v9 .la-footer-grid a,.la-v9 .la-footer-grid p{font-size:16px!important;line-height:1.7}
+ .la-v9 .la-footer-bottom{width:min(100% - 36px,620px);font-size:13px;line-height:1.65;padding-bottom:32px}
+ .la-v9 .la-footer-bottom div{gap:13px}
+}
+@media (max-width:380px){
+ .la-v9 .v8-hero h1.v9-brand-title{font-size:clamp(47px,13vw,56px)!important}
+ .la-v9 .v9-subtitle{font-size:27px!important}
+ .la-v9 .v9-eyebrow{font-size:9px!important}
+ .la-v9 .values{grid-template-columns:1fr!important}
+ .la-v9 .value{border-right:0}
+}

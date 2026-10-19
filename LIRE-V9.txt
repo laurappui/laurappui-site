@@ -1,0 +1,3 @@
+Laur’Appui V9 — nouveau haut de page et améliorations responsive mobile.
+Le texte SEO de la page d’accueil, le titre H1, les balises meta, les URLs, le sitemap et les autres pages sont conservés depuis V8.
+Déployer le contenu du dossier laurappui-site-main sur Cloudflare Pages. Vérifier les liens et le rendu sur ordinateur et mobile.
