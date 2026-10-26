@@ -1,0 +1,18 @@
+LAUR’APPUI — V12 SEO CIBLÉE — 26/10/2026
+
+Fichiers modifiés : index.html, professionnels.html, particuliers.html, a-propos.html, style.css, sitemap.xml.
+
+- Accueil : ajout d'un bloc de contenu local et national avec liens vers les prestations.
+- Professionnels : ajout d'exemples de besoins administratifs et de liens vers tarifs/contact.
+- Particuliers : ajout de cas concrets et de liens vers tarifs/contact.
+- À propos : précision de l'expérience (4 ans en cabinet comptable + 4 ans en banque).
+- CSS : style discret et responsive du nouveau contenu, sans toucher aux styles existants.
+- Sitemap : dates lastmod actualisées uniquement pour les 4 pages éditées.
+
+INCHANGÉS : design existant, tarifs, offres, formulaires, Stripe, Cloudflare Functions, API, base de données, CGV, mentions légales, scripts de paiement, navigation et images.
+
+CONTRÔLES : les pages admin et merci-paiement ont déjà des balises noindex ; confidentialite.html est déjà noindex avec canonique vers politique-confidentialite. Aucune modification nécessaire.
+
+ATTENTION : aucun gain de classement ou de clients n'est garanti. Vérifier l'affichage desktop/mobile après déploiement. Mesurer Search Console sur 4 à 8 semaines, particulièrement les requêtes non liées à la marque.
+
+Déploiement : conserver les variables d'environnement, secrets et liaisons D1/Stripe existants sur Cloudflare.
