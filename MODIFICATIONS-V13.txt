@@ -1,0 +1,7 @@
+Laur’Appui V13 — suppression des répétitions en bas des pages Professionnels et Particuliers.
+
+Deux sections répétitives supprimées de chaque page (seo-information et seo-v12).
+Conservation des présentations, cartes de prestations, fonctionnement, bandeau de contact, footer, balises meta, titres H1, liens de navigation et fichiers techniques.
+Aucun changement aux tarifs, Stripe, Cloudflare, styles CSS ni aux autres pages.
+
+Après déploiement, vérifier les deux pages sur ordinateur et mobile.
