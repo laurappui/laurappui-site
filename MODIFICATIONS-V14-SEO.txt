@@ -1,0 +1,10 @@
+LAUR’APPUI V14 — SEO ciblé (9 novembre 2026)
+
+- Titres et méta-descriptions affinés sur professionnels, particuliers et offre-alacarte.
+- Balises Open Graph et Twitter synchronisées.
+- Titre H1 de l’offre à la carte clarifié.
+- Lien interne contextuel ajouté depuis Professionnels vers Offre à la carte.
+- Aucun changement de CSS, JS, navigation, sitemap, canonicals ou fonctionnalités.
+- Aucun changement des autres fichiers.
+
+Après déploiement : vérifier le rendu et les URL en production, puis suivre Search Console sur 28 jours. Les résultats SEO ne sont pas garantis.
